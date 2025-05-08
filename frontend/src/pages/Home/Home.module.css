@@ -62,7 +62,7 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  margin-top: 250px;
+  margin-top: 150px;
   height: 100%;
   text-align: center;
   padding: 50px;
@@ -149,4 +149,135 @@
   position: relative;
   top: -2px;
   left: -2px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 8px;
+}
+
+.chosenButton {
+  background: transparent;
+  border-style: solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right, #E4C396, #F3E6D4, #F9E0C2);
+  padding: 5px;
+  position: relative;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdownButton {
+  font-family: 'Almendra', serif;
+  width: 100%;
+  padding: 20px;
+  width: 345px;
+  text-align: center;
+  background: transparent;
+  border: 1px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right, #E4C396, #F3E6D4, #F9E0C2);
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  font-family: 'Almendra', serif;
+  display: block; /* Hiển thị khi menu được mở */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #F9E0C2;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  z-index: 10;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdownMenu.show {
+  display: block;
+  opacity: 1; /* Độ mờ khi mở */
+  transform: translateY(0); /* Vị trí khi mở */
+}
+
+.dropdownMenu li {
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+}
+
+.dropdownMenu li:hover {
+  background-color: #E4C396;
+  color: white;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+.arrowIcon.rotate {
+  transform: rotate(180deg);
+}
+
+.chosenSecondButton{
+  margin-top: 20px;
+}
+
+.processChosenCard{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.shuffleButton {
+  font-family: 'Almendra', serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px; /* Độ rộng */
+  height: 100px; /* Chiều cao */
+  background-color: #b0a69a; /* Màu nền */
+  color: black; /* Màu chữ */
+  font-weight: bold; /* Làm đậm chữ */
+  border-radius: 50%; /* Để tạo hình tròn */
+  border: none; /* Không có viền */
+  cursor: pointer; /* Hiển thị con trỏ tay khi hover */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+.shuffleButton:hover {
+  background-color: #F3E6D4; /* Thay đổi màu nền khi hover */
+  transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+
+.shuffleButton button {
+  font-family: 'Almendra', serif;
+  font-size: 12px; /* Kích thước chữ */
+  width: 90px; /* Độ rộng */
+  height: 90px; /* Chiều cao */
+  border-radius: 50%; /* Để tạo hình tròn */
+  border: 2px solid black;
+  background: none;
+  color: black; /* Màu chữ */
+  text-decoration: none; /* Không có gạch chân */
+}
+
+.shuffleListCard{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
