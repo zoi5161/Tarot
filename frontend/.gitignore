@@ -1,0 +1,24 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+build/
+
+# .env file for sensitive information
+.env
+
+# VSCode settings
+.vscode/
+
+# MacOS system files
+.DS_Store
+
+# npm debug log
+npm-debug.log*
+
+# Yarn lock file (if you use Yarn instead of npm)
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/

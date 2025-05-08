@@ -1,0 +1,58 @@
+.container {
+  font-family: Arial, sans-serif;
+  color: white;
+  height: 100vh;
+  background-image: url('/banner.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Navbar styles */
+.navbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3); /* Transparent black */
+}
+
+.navList {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  margin: 0 20px;
+}
+
+.navItem a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.navItem a:hover {
+  color: #ffcc00; /* Highlight color */
+}
+
+/* Banner section */
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 50px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
