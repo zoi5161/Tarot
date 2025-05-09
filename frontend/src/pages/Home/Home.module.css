@@ -243,17 +243,17 @@
 
 .shuffleButton {
   font-family: 'Almendra', serif;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100px; /* Độ rộng */
   height: 100px; /* Chiều cao */
-  background-color: #b0a69a; /* Màu nền */
+  background-color: #e5c297; /* Màu nền */
   color: black; /* Màu chữ */
   font-weight: bold; /* Làm đậm chữ */
   border-radius: 50%; /* Để tạo hình tròn */
   border: none; /* Không có viền */
-  cursor: pointer; /* Hiển thị con trỏ tay khi hover */
   transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng khi hover */
 }
 
@@ -272,12 +272,50 @@
   background: none;
   color: black; /* Màu chữ */
   text-decoration: none; /* Không có gạch chân */
+
+  cursor: pointer; /* Hiển thị con trỏ tay khi hover */
 }
 
 .shuffleListCard{
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 50px;
   margin-top: 20px;
+  width: 1000px;
+}
+
+.listCard {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  padding: 30px 20px 0 120px;
+  position: relative;
+  z-index: 10;
+}
+.card {
+  position: relative;
+  margin-left: -59px;
+  transition: left 0.3s ease, transform 0.3s ease;
+}
+
+.cardShuffle {
+  transform: translate(-40px, -15px);
+}
+
+.card img {
+  width: 60px;
+  height: auto;
+}
+
+.card1{
+  z-index: 1;
+}
+
+.card2{
+  z-index: 2;
+}
+.card3{
+  z-index: 3;
 }
