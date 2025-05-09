@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'BRAMS';
+  src: url('../../../public/fonts/Brams-K7DWW.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -12,7 +19,7 @@
   font-family: Arial, sans-serif;
   color: white;
   height: 130vh;
-  background-image: url('../../../public/banner.png');  /* Sử dụng đường dẫn từ thư mục public */
+  background-image: url('../../../public/banner1.png');  /* Sử dụng đường dẫn từ thư mục public */
   background-size: cover;
   position: relative;
   display: flex;
@@ -25,7 +32,7 @@
   font-family: 'Almendra', serif;
   position: absolute;
   top: 0;
-  width: 70rem;
+  width: 100%;
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -51,6 +58,7 @@
   font-size: 16px;
   font-weight: 500;
   transition: color 0.3s ease;
+  user-select: none;
 }
 
 .navItem a:hover {
@@ -69,28 +77,30 @@
 }
 
 .titleBlack {
-  font-family: 'Almendra', serif;
+  font-family: 'BRAMS', serif;
   font-size: 120px;  /* Kích thước chữ lớn hơn */
-  font-weight: bold;
-  color: black;  /* Màu đen cho chữ */
+  font-weight: normal;
+  color: rgb(52, 52, 52);  /* Màu đen cho chữ */
   text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);  /* Đổ bóng chữ */
   position: relative; /* Sử dụng position relative để giữ phần tử trong phạm vi của container */
-  top: -10px; /* Đẩy phần tử titleBlack lên cao hơn 5px */
-  left: 8px;
+  top: -5px; /* Đẩy phần tử titleBlack lên cao hơn 5px */
+  left: 5px;
   z-index: 0;
+  user-select: none;
   margin: 0;
   margin-bottom: 30px;
 }
 
 .title {
-  font-family: 'Almendra', serif;
+  font-family: 'BRAMS', serif;
   font-size: 120px;
-  font-weight: bold;
+  font-weight: normal;
   background: -webkit-linear-gradient(0deg, #E4C396, #F3E6D4, #F9E0C2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.05);
   position: absolute;
+  user-select: none;
   z-index: 1;
   margin: 0;
 }
@@ -104,7 +114,7 @@
 }
 
 .westmins{
-  font-family: WestminsterGotisch;
+  font-family: 'BRAMS', serif;
   font-size: 120px;
 }
 
@@ -117,6 +127,7 @@
   display: flex;
   align-items: center;
   text-decoration: none;
+  user-select: none;
 }
 
 .logoImage {
@@ -142,6 +153,7 @@
   color: white;
   text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);
   margin-top: -10px;
+  user-select: none;
 }
 
 .number{
@@ -167,6 +179,7 @@
   width: 350px;
   display: flex;
   justify-content: center;
+  user-select: none;
 }
 
 .dropdownButton {
@@ -241,63 +254,79 @@
   margin-top: 50px;
 }
 
-.shuffleButton {
-  font-family: 'Almendra', serif;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px; /* Độ rộng */
-  height: 100px; /* Chiều cao */
-  background-color: #e5c297; /* Màu nền */
-  color: black; /* Màu chữ */
-  font-weight: bold; /* Làm đậm chữ */
-  border-radius: 50%; /* Để tạo hình tròn */
-  border: none; /* Không có viền */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng khi hover */
-}
-
-.shuffleButton:hover {
-  background-color: #F3E6D4; /* Thay đổi màu nền khi hover */
-  transform: scale(1.05); /* Phóng to nhẹ khi hover */
-}
-
-.shuffleButton button {
-  font-family: 'Almendra', serif;
-  font-size: 12px; /* Kích thước chữ */
-  width: 90px; /* Độ rộng */
-  height: 90px; /* Chiều cao */
-  border-radius: 50%; /* Để tạo hình tròn */
-  border: 2px solid black;
-  background: none;
-  color: black; /* Màu chữ */
-  text-decoration: none; /* Không có gạch chân */
-
-  cursor: pointer; /* Hiển thị con trỏ tay khi hover */
-}
-
 .shuffleListCard{
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   gap: 50px;
   margin-top: 20px;
-  width: 1000px;
+  width: 1100px;
+}
+
+.shuffleButton {
+  font-family: 'Almendra', serif;
+  position: relative;
+  display: flex;
+  left: 37%;
+  margin-top: 25px;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background-color: #e5c297; 
+  color: black;
+  font-weight: bold;
+  border-radius: 50%;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, left 0.5s ease;
+}
+
+.shuffleButton:hover {
+  background-color: #F3E6D4;
+  transform: scale(1.05);
+}
+
+.shuffleButton button {
+  font-family: 'Almendra', serif;
+  font-size: 12px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid black;
+  background: none;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
 }
 
 .listCard {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: scroll;
-  padding: 30px 20px 0 120px;
+  padding: 30px 20px 0 100px;
   position: relative;
+  left: 36%;
   z-index: 10;
+  transition: left 0.5s ease;
 }
+
 .card {
   position: relative;
-  margin-left: -59px;
-  transition: left 0.3s ease, transform 0.3s ease;
+  margin-left: -60px;
+  transition: left 0.3s ease, transform 0.3s ease, opacity 1s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  opacity: 1;
+}
+
+.card.hidden {
+  opacity: 0;
+}
+
+.card:hover {
+  transform: translate(0px, -5px) !important; /* Move the card down by 10px */
+  filter: brightness(0.8);
 }
 
 .cardShuffle {
@@ -307,15 +336,5 @@
 .card img {
   width: 60px;
   height: auto;
-}
-
-.card1{
-  z-index: 1;
-}
-
-.card2{
-  z-index: 2;
-}
-.card3{
-  z-index: 3;
+  -webkit-user-drag: none;
 }
