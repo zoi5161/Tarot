@@ -1,11 +1,28 @@
-import express from 'express';
+import express, { Express, Request, response, Response } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import chatRoutes from './routers/chatRoutes';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
-const app = express();
-const port = process.env.PORT_BACKEND || 5000;  // Lấy cổng từ .env, mặc định là 5000 nếu không có trong .env
+const app: Express = express();
+const port = process.env.PORT_BACKEND || 5000;  
+
+app.use(
+    cors({
+        origin: 'http://localhost:5173',  // Cho phép từ địa chỉ này
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Các phương thức HTTP cho phép
+        allowedHeaders: ['Content-Type', 'Authorization'],  // Các header cho phép
+        credentials: true,  // Nếu bạn muốn sử dụng cookies, credentials cần phải bật
+    })
+);
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use('/api', chatRoutes);
 
 const connectDB = async () => {
   try {

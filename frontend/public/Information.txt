@@ -1,0 +1,156 @@
+card1.png|Gia đình hài hòa|Học tập tiến bộ|Tình cảm thăng hoa
+card2.png|Sự đoàn kết gia đình|Sự sáng tạo học tập|Tình yêu đích thực
+card3.png|Bảo vệ gia đình|Học tập suôn sẻ|Quan hệ tình cảm bền vững
+card4.png|Gia đình hạnh phúc|Học tập hiệu quả|Lãng mạn thắm thiết
+card5.png|Mối quan hệ gia đình ấm áp|Giải quyết vấn đề học tập|Tình yêu mặn nồng
+card6.png|Gia đình gắn kết|Khám phá học thức|Lời khuyên tình cảm hữu ích
+card7.png|Hỗ trợ từ gia đình|Kết quả học tập tốt|Tình yêu đầy đam mê
+card8.png|Gia đình yêu thương|Tinh thần học tập cao|Tình cảm chân thành
+card9.png|Gia đình tràn ngập yêu thương|Học hỏi và trưởng thành|Tình yêu vô điều kiện
+card10.png|Giữ gìn gia đình|Học tập thành công|Tình yêu chân thành
+card11.png|Gia đình đoàn kết|Khát khao học hỏi|Cảm xúc tình cảm sâu sắc
+card12.png|Mối quan hệ gia đình mạnh mẽ|Giải quyết vấn đề học tập hiệu quả|Tình yêu tinh tế
+card13.png|Gia đình là điểm tựa|Lạc quan trong học tập|Cảm xúc tình yêu tuyệt vời
+card14.png|Hỗ trợ gia đình trong mọi khó khăn|Học tập đạt kết quả cao|Tình yêu chung thủy
+card15.png|Gia đình là sức mạnh|Chia sẻ kiến thức|Tình yêu đầy hy vọng
+card16.png|Gia đình cùng phát triển|Kiến thức vững vàng|Tình yêu dịu dàng
+card17.png|Hòa hợp gia đình|Học tập hiệu quả|Cảm xúc tình yêu chân thật
+card18.png|Gia đình hạnh phúc viên mãn|Học tập vui vẻ|Tình yêu vững chắc
+card19.png|Tình yêu gia đình bền vững|Học tập suôn sẻ|Tình cảm lãng mạn
+card20.png|Gia đình là nền tảng|Mở rộng tri thức|Tình yêu tươi sáng
+card21.png|Gia đình ổn định|Tạo ra kết quả học tập|Tình yêu đong đầy
+card22.png|Gia đình yêu thương|Học tập gặt hái thành công|Tình cảm tuyệt vời
+card23.png|Hỗ trợ gia đình trong khó khăn|Chinh phục thử thách học tập|Tình yêu đậm sâu
+card24.png|Gia đình vững mạnh|Tiến bộ học tập|Cảm xúc tình yêu ngọt ngào
+card25.png|Gia đình đầm ấm|Học tập thăng tiến|Tình yêu lâu dài
+card26.png|Gia đình ấm áp|Kết quả học tập xuất sắc|Cảm xúc tình yêu tuyệt vời
+card27.png|Gia đình hòa thuận|Khám phá học thức|Tình yêu chân thành
+card28.png|Gia đình luôn bên nhau|Sự phát triển học tập|Cảm xúc tình cảm mạnh mẽ
+card29.png|Tình cảm gia đình vững chắc|Học tập hiệu quả|Tình yêu sôi nổi
+card30.png|Gia đình đoàn kết|Học tập tốt|Tình cảm sâu sắc
+card31.png|Gia đình thấu hiểu|Học hỏi và sáng tạo|Tình yêu nồng nàn
+card32.png|Gia đình vững chãi|Học tập đạt kết quả|Tình yêu trọn vẹn
+card33.png|Sự hỗ trợ từ gia đình|Học hỏi tích cực|Tình yêu nhẹ nhàng
+card34.png|Gia đình luôn chăm sóc|Học tập thành công|Tình cảm đong đầy
+card35.png|Gia đình gắn kết bền vững|Giải quyết vấn đề học tập|Tình yêu vĩnh cửu
+card36.png|Gia đình yêu thương nhau|Tinh thần học tập mạnh mẽ|Tình cảm thăng hoa
+card37.png|Gia đình yên ấm|Kết quả học tập tốt|Tình yêu tuyệt vời
+card38.png|Tình yêu gia đình mạnh mẽ|Học hỏi chăm chỉ|Tình yêu trong sáng
+card39.png|Gia đình tràn đầy yêu thương|Tinh thần học tập hứng khởi|Tình yêu nồng nhiệt
+card40.png|Tình cảm gia đình hạnh phúc|Khám phá tri thức|Tình yêu chung thủy
+card41.png|Gia đình luôn đồng hành|Học tập vượt bậc|Tình yêu mãnh liệt
+card42.png|Gia đình gắn kết bền chặt|Học tập thành công|Tình yêu lâu dài
+card43.png|Gia đình bình yên|Thành công trong học tập|Tình yêu ngọt ngào
+card44.png|Gia đình mạnh mẽ|Học tập thăng tiến|Tình yêu lãng mạn
+card45.png|Gia đình tràn ngập tình yêu|Học tập tiến bộ|Tình yêu chân thành
+card46.png|Gia đình hạnh phúc trọn vẹn|Học tập thành công|Tình yêu đằm thắm
+card47.png|Gia đình là nơi bình yên|Tìm kiếm kiến thức|Tình yêu sâu sắc
+card48.png|Gia đình đồng hành|Học tập đạt thành công|Tình yêu đẹp
+card49.png|Gia đình ấm cúng|Chinh phục học vấn|Tình yêu vô bờ
+card50.png|Gia đình cùng tiến bước|Học hỏi mỗi ngày|Tình yêu mạnh mẽ
+card51.png|Gia đình yêu thương|Tình cảm học tập thăng hoa|Tình yêu tinh tế
+card52.png|Gia đình đoàn kết|Tự tin trong học tập|Tình yêu ngọt ngào
+card53.png|Gia đình chở che|Học tập hiệu quả|Tình yêu chân thật
+card54.png|Gia đình yêu thương|Học tập không ngừng|Tình yêu chân thành
+card55.png|Gia đình vui vẻ|Chia sẻ tri thức|Tình yêu thăng hoa
+card56.png|Gia đình ổn định|Học tập phát triển|Tình yêu đích thực
+card57.png|Gia đình luôn bên cạnh|Học tập đạt mục tiêu|Tình yêu đậm đà
+card58.png|Gia đình gần gũi|Sự học tập tự nhiên|Tình yêu lâu dài
+card59.png|Gia đình hòa hợp|Học tập tốt|Tình yêu đầy hy vọng
+card60.png|Gia đình yêu thương|Phát triển học thức|Tình yêu chung thủy
+card61.png|Gia đình ấm áp|Học tập sáng tạo|Tình yêu mạnh mẽ
+card62.png|Gia đình đoàn kết|Tiến bộ học tập|Tình yêu tuyệt vời
+card63.png|Gia đình bảo vệ|Học hỏi mọi lúc|Tình yêu nồng nàn
+card64.png|Gia đình mạnh mẽ|Thành công học tập|Tình yêu ngọt ngào
+card65.png|Gia đình yêu thương|Học hỏi suôn sẻ|Tình yêu đong đầy
+card66.png|Gia đình gần gũi|Tăng trưởng học tập|Tình yêu bền lâu
+card67.png|Gia đình vững vàng|Làm chủ học tập|Tình yêu đầy cảm xúc
+card68.png|Gia đình ấm cúng|Giải quyết vấn đề học tập|Tình yêu đầy ắp
+card69.png|Gia đình đầm ấm|Học tập thịnh vượng|Tình yêu sâu sắc
+card70.png|Gia đình ổn định|Thành công học tập|Tình yêu bền chặt
+card71.png|Gia đình hòa hợp|Học tập tốt|Tình yêu mãnh liệt
+card72.png|Gia đình yêu thương|Tiến bộ học tập|Tình yêu ngọt ngào
+card73.png|Gia đình tràn ngập tình yêu|Đạt thành tích học tập|Tình yêu đích thực
+card74.png|Gia đình gắn bó|Học tập hiệu quả|Tình yêu ngập tràn
+card75.png|Gia đình bình yên|Giải quyết vấn đề học tập|Tình yêu thăng hoa
+card76.png|Gia đình đầm ấm|Học tập tự nhiên|Tình yêu tuyệt vời
+card77.png|Gia đình đồng cảm|Học hỏi và tiến bộ|Tình yêu chân thành
+card78.png|Gia đình vững mạnh|Học tập vượt trội|Tình yêu sâu sắc
+card79.png|Gia đình gặp khó khăn|Học tập trì trệ|Tình yêu phai nhạt
+card80.png|Gia đình rạn nứt|Mất phương hướng học tập|Tình yêu cạn kiệt
+card81.png|Mối quan hệ gia đình căng thẳng|Học tập thất bại|Tình cảm lạnh nhạt
+card82.png|Mất sự hòa hợp gia đình|Khó khăn trong học tập|Tình yêu nguội lạnh
+card83.png|Gia đình không vững|Khó khăn học tập|Tình yêu vỡ vụn
+card84.png|Gia đình không hiểu nhau|Chán nản trong học tập|Tình yêu mờ nhạt
+card85.png|Gia đình không đoàn kết|Bế tắc trong học tập|Tình yêu tan vỡ
+card86.png|Gia đình có mâu thuẫn|Giảm sút kết quả học tập|Tình yêu đổ vỡ
+card87.png|Gia đình mâu thuẫn|Khó khăn học tập|Tình yêu lạnh lẽo
+card88.png|Mất đi sự đồng điệu gia đình|Khó khăn trong học tập|Tình yêu lụi tàn
+card89.png|Gia đình không hạnh phúc|Lạc lối trong học tập|Tình yêu tan rã
+card90.png|Gia đình không hiểu nhau|Sự lùi bước trong học tập|Tình yêu phai mờ
+card91.png|Gia đình không thông cảm|Thất bại học tập|Tình yêu kết thúc
+card92.png|Gia đình không vững|Mất phương hướng học tập|Tình yêu vắng bóng
+card93.png|Gia đình chia rẽ|Học tập chững lại|Tình yêu mờ nhạt
+card94.png|Gia đình tan vỡ|Không thể tiếp tục học tập|Tình yêu bế tắc
+card95.png|Gia đình rối ren|Lười biếng học tập|Tình yêu lụi tàn
+card96.png|Gia đình không ổn định|Thiếu động lực học tập|Tình yêu mờ nhạt
+card97.png|Gia đình tan vỡ|Lạc lõng trong học tập|Tình yêu phai nhạt
+card98.png|Gia đình bất hòa|Mất phương hướng học tập|Tình yêu không còn
+card99.png|Mất đi sự yêu thương gia đình|Không tập trung học tập|Tình yêu nguội lạnh
+card100.png|Gia đình rạn nứt|Sự cố trong học tập|Tình yêu tan vỡ
+card101.png|Gia đình không còn gắn kết|Thiếu niềm tin trong học tập|Tình yêu phai mờ
+card102.png|Mất sự thấu hiểu gia đình|Bế tắc học tập|Tình yêu đổ vỡ
+card103.png|Gia đình có vấn đề|Sự trì hoãn học tập|Tình yêu lạnh lẽo
+card104.png|Gia đình không hiểu nhau|Khó khăn học tập|Tình yêu bế tắc
+card105.png|Gia đình không đoàn kết|Sự chán nản trong học tập|Tình yêu không còn
+card106.png|Mối quan hệ gia đình căng thẳng|Kết quả học tập thấp|Tình yêu lạnh nhạt
+card107.png|Gia đình không đồng điệu|Khó khăn trong học tập|Tình yêu mờ nhạt
+card108.png|Gia đình không hiểu nhau|Bế tắc học tập|Tình yêu phai mờ
+card109.png|Gia đình không còn yêu thương|Giảm sút học tập|Tình yêu đổ vỡ
+card110.png|Gia đình không ổn định|Không tiến bộ học tập|Tình yêu nguội lạnh
+card111.png|Gia đình gặp khó khăn|Học tập thất bại|Tình yêu vỡ vụn
+card112.png|Gia đình có vấn đề|Khó khăn học tập|Tình yêu lạnh lẽo
+card113.png|Mất sự đồng điệu gia đình|Không thể học tập|Tình yêu lụi tàn
+card114.png|Gia đình không hiểu nhau|Thiếu quyết tâm học tập|Tình yêu kết thúc
+card115.png|Gia đình không còn gắn kết|Mất phương hướng học tập|Tình yêu mờ nhạt
+card116.png|Gia đình rạn nứt|Mất động lực học tập|Tình yêu vỡ vụn
+card117.png|Gia đình không ổn định|Không thể tiến bộ học tập|Tình yêu lụi tàn
+card118.png|Gia đình không yêu thương|Học tập không suôn sẻ|Tình yêu không còn
+card119.png|Gia đình không hòa hợp|Học tập đình trệ|Tình yêu lạnh nhạt
+card120.png|Gia đình không còn gắn kết|Kết quả học tập thấp|Tình yêu đổ vỡ
+card121.png|Gia đình không thấu hiểu|Học tập lùi lại|Tình yêu phai mờ
+card122.png|Gia đình không ổn định|Không thể học tốt|Tình yêu không có
+card123.png|Gia đình rạn nứt|Sự trì hoãn học tập|Tình yêu mờ nhạt
+card124.png|Mất sự gắn kết gia đình|Không thể tiến bộ học tập|Tình yêu tan vỡ
+card125.png|Gia đình không còn tình cảm|Không có sự tập trung học tập|Tình yêu lạnh nhạt
+card126.png|Gia đình không còn gắn kết|Thiếu động lực học tập|Tình yêu không còn
+card127.png|Gia đình gặp khó khăn|Không thể học tập|Tình yêu mờ nhạt
+card128.png|Gia đình không hòa hợp|Thiếu niềm tin học tập|Tình yêu bế tắc
+card129.png|Gia đình không còn yêu thương|Không có sự ổn định trong học tập|Tình yêu phai mờ
+card130.png|Gia đình không thấu hiểu|Không thể tiến bộ trong học tập|Tình yêu không còn
+card131.png|Gia đình rạn nứt|Thiếu động lực học tập|Tình yêu không còn
+card132.png|Gia đình không ổn định|Bế tắc học tập|Tình yêu lạnh nhạt
+card133.png|Gia đình có vấn đề|Không thể học tốt|Tình yêu tan vỡ
+card134.png|Mất sự đồng điệu gia đình|Học tập không ổn định|Tình yêu mờ nhạt
+card135.png|Gia đình không còn gắn kết|Thiếu quyết tâm học tập|Tình yêu lạnh nhạt
+card136.png|Gia đình không hiểu nhau|Sự trì hoãn học tập|Tình yêu đổ vỡ
+card137.png|Gia đình không còn yêu thương|Khó khăn trong học tập|Tình yêu phai mờ
+card138.png|Gia đình không ổn định|Thiếu động lực học tập|Tình yêu đổ vỡ
+card139.png|Gia đình gặp khó khăn|Bế tắc học tập|Tình yêu lạnh nhạt
+card140.png|Gia đình không yêu thương|Học tập thất bại|Tình yêu mờ nhạt
+card141.png|Gia đình không đoàn kết|Không có sự tiến bộ học tập|Tình yêu tan vỡ
+card142.png|Gia đình không hiểu nhau|Khó khăn học tập|Tình yêu không còn
+card143.png|Gia đình không còn tình yêu|Mất động lực học tập|Tình yêu không còn
+card144.png|Gia đình không đoàn kết|Không tiến bộ học tập|Tình yêu lạnh nhạt
+card145.png|Gia đình không yêu thương|Thiếu niềm tin trong học tập|Tình yêu phai mờ
+card146.png|Gia đình không hiểu nhau|Bế tắc học tập|Tình yêu mờ nhạt
+card147.png|Gia đình gặp khó khăn|Thiếu sự phát triển học tập|Tình yêu đổ vỡ
+card148.png|Gia đình không còn tình yêu|Không có sự quyết tâm học tập|Tình yêu lạnh nhạt
+card149.png|Gia đình không đoàn kết|Không thể học tốt|Tình yêu tan vỡ
+card150.png|Gia đình không yêu thương|Khó khăn trong học tập|Tình yêu mờ nhạt
+card151.png|Gia đình không thấu hiểu|Không thể học tốt|Tình yêu lạnh nhạt
+card152.png|Gia đình không ổn định|Không tiến bộ học tập|Tình yêu không còn
+card153.png|Gia đình không còn yêu thương|Bế tắc học tập|Tình yêu mờ nhạt
+card154.png|Gia đình gặp khó khăn|Thiếu niềm tin học tập|Tình yêu tan vỡ
+card155.png|Gia đình không ổn định|Không thể học tập|Tình yêu không còn
+card156.png|Gia đình không thấu hiểu|Không thể học tốt|Tình yêu mờ nhạt

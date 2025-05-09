@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Home.module.css';
+import axios from 'axios';
+
+interface Card {
+  src: string;
+  DescriptionFamily: string;
+  DescriptionStudy: string;
+  DescriptionLove: string;
+}
 
 const Home = () => {
   const [selectedTheme, setSelectedTheme] = useState("CHỌN CHỦ ĐỀ");
@@ -17,15 +25,53 @@ const Home = () => {
   const [positionCard3Animation, setPositionCard3Animation] = useState([0, 0]);
   const [positionCard2Animation, setPositionCard2Animation] = useState([0, 0]);
   const [zIndexCard3Animation, setZIndexCard3Animation] = useState(3);
-  const [isShuffling, setIsShuffling] = useState(false); // Trạng thái xào bài
-  const [isShufflingCompleted, setIsShufflingCompleted] = useState(false); // Trạng thái xào bài đã hoàn thành
-  const [isCardVisible, setIsCardVisible] = useState(false); // Để điều khiển việc hiển thị các lá bài
-  const [shuffleButtonLeft, setShuffleButtonLeft] = useState('37%'); // Vị trí left của shuffleButton
-  const [listCardLeft, setListCardLeft] = useState('37%'); // Vị trí left của listCard
-  const [buttonLabel, setButtonLabel] = useState("XÀO BÀI"); // Trạng thái cho label của nút
+  const [isShuffling, setIsShuffling] = useState(false);
+  const [isShufflingCompleted, setIsShufflingCompleted] = useState(false);
+  const [isCardVisible, setIsCardVisible] = useState(false);
+  const [shuffleButtonLeft, setShuffleButtonLeft] = useState('37%');
+  const [listCardLeft, setListCardLeft] = useState('37%');
+  const [buttonLabel, setButtonLabel] = useState("XÀO BÀI");
   const [isSpreadCompleted, setIsSpreadCompleted] = useState(false);
-  const [hiddenCards, setHiddenCards] = useState<number[]>([]); // Chỉ rõ kiểu là mảng số
+  const [hiddenCards, setHiddenCards] = useState<number[]>([]);
+  const [cardImages, setCardImages] = useState(['quesCard.svg', 'quesCard.svg', 'quesCard.svg']);
+  const [selectedCards, setSelectedCards] = useState<Card[]>([]);
+  const [isMeaningButtonClicked, setIsMeaningButtonClicked] = useState(false);
+  const [finalPrompt, setFinalPrompt] = useState('Bạn hãy đưa ra ý nghĩa chung ít nhất 200 chữ và nhiều nhất 300 chữ cho 3 lá bài tarot tôi vừa bóc được. Nhớ xuống dòng sau 1 đoạn nào đó.  Không được nhắc lại ý nghĩa tôi đã đưa hay nói các câu kiểu với lá đầu tiên bốc được gì đó. Các lá có ý nghĩa lần lượt là: ');
+  const selectedCardIndexes: number[] = [];
+  const [responseText, setResponseText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const themeDropdownRef = useRef<HTMLDivElement>(null);
+
+  const fetchCardData = async () => {
+    const response = await fetch('/Information.txt');
+    
+    if (!response.ok) {
+      console.error('Error fetching file:', response.statusText);
+      return;
+    }
+    
+    const text = await response.text();
+    
+    const cardLines = text.split('\n').filter(line => line.trim() !== '');
+    
+    const cardsData = cardLines.map(line => {
+      const [
+        src,
+        DescriptionFamily,
+        DescriptionStudy,
+        DescriptionLove,
+      ] = line.split('|');
+
+      return {
+        src,
+        DescriptionFamily,
+        DescriptionStudy,
+        DescriptionLove,
+      };
+    });
+
+    return cardsData; // Return the fetched card data
+  };
 
   const handleThemeSelect = (value: string) => {
     setSelectedTheme(value);
@@ -44,30 +90,61 @@ const Home = () => {
     }
   };
 
-  const handleCardClick = (index: number) => {
+  const handleCardClick = async (index: number) => {
     if (hiddenCards.length < 3 && !hiddenCards.includes(index) && isSpreadCompleted) {
-        // setHiddenCards([...hiddenCards, index]);
-        // const newPositions = [...cardPositions];
-    
-        // // Dịch chuyển lá bài được click đến vị trí mới
-        // newPositions[index] = {
-        //   left: 20 + index * 50,  // Thay đổi vị trí `left`
-        //   top: 500,               // Thay đổi vị trí `top`
-        //   width: 300,             // Thay đổi kích thước khi click
-        // };
-      
-        // setCardPositions(newPositions);
+      const newHiddenCards = [...hiddenCards, index];
+      setHiddenCards(newHiddenCards);
+
+      // Chọn một số ngẫu nhiên duy nhất
+      const randomCardIndex = await getUniqueRandomCardIndex(); // Lấy số ngẫu nhiên không trùng
+      if (randomCardIndex === -1) {
+        console.log('Không còn lá bài nào để chọn.');
+        return;
       }
+
+      const cardsData = await fetchCardData(); // Lấy dữ liệu các lá bài
+      if (!cardsData) {
+        console.error('Cards data is undefined');
+        return;
+      }
+
+      const selectedCard = cardsData[randomCardIndex]; // Chọn lá bài từ index ngẫu nhiên
+
+      // Thêm lá bài đã chọn vào state
+      setSelectedCards(prevCards => [
+        ...prevCards,
+        selectedCard
+      ]);
+
+      // Cập nhật hình ảnh của lá bài đã chọn
+      const newCardImages = [...cardImages];
+      const nextEmptyIndex = newCardImages.findIndex(image => image === 'quesCard.svg');
+      if (nextEmptyIndex !== -1) {
+        newCardImages[nextEmptyIndex] = `cards/card${randomCardIndex + 1}.png`; // Cập nhật ảnh
+        setCardImages(newCardImages);
+      }
+
+      // Gọi lại hàm generateFinalPrompt sau khi thay đổi cardImages
+      generateFinalPrompt(selectedTheme);
+    }
   };
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
+  const getUniqueRandomCardIndex = async () => {
+    const cardsData = await fetchCardData();
+    if (!cardsData || cardsData.length === 0) return -1;
 
-    const startCardAnimation = () => {
+    // Tạo số ngẫu nhiên và kiểm tra trùng lặp
+    let randomCardIndex;
+    do {
+      randomCardIndex = Math.floor(Math.random() * cardsData.length); // Tạo số ngẫu nhiên từ 0 đến length
+    } while (selectedCardIndexes.includes(randomCardIndex)); // Kiểm tra nếu số đã được chọn
+
+    // Lưu số đã chọn vào mảng
+    selectedCardIndexes.push(randomCardIndex);
+    return randomCardIndex; // Trả về index không trùng
+  };
+
+  const startCardAnimation = () => {
     setAnimationStarted(true);
     let positions = [0, 0, 0];
     setCardPositions(positions);
@@ -82,7 +159,6 @@ const Home = () => {
     }, 400);
   };
 
-  // Hàm xào bài
   const handleShuffleClick = () => {
     if (isShufflingCompleted) {
       setShuffleButtonLeft('60px');
@@ -140,7 +216,6 @@ const Home = () => {
     loopShuffle(); // Bắt đầu vòng lặp
   };
 
-  // Hàm trải các lá bài
   const spreadCardAnimation = () => {
     setAnimationStarted(true);
     let positions = Array(77).fill(0);
@@ -168,19 +243,91 @@ const Home = () => {
     }, 400); // Điều chỉnh tốc độ animation
   };
 
+  const generateFinalPrompt = (theme: string) => {
+    let prompt = 'Bạn hãy đưa ra ý nghĩa chung ít nhất 200 chữ và nhiều nhất 300 chữ cho 3 lá bài tarot tôi vừa bóc được. Nhớ xuống dòng sau 1 đoạn nào đó.  Không được nhắc lại ý nghĩa tôi đã đưa hay nói các câu kiểu với lá đầu tiên bốc được gì đó. Lá 1 có ý nghĩa là ';
+    
+    // Loop through selected cards and create the prompt based on selected theme
+    selectedCards.forEach((card) => {
+      let description = '';
+      
+      switch (theme) {
+        case 'GIA ĐÌNH':
+          description = card.DescriptionFamily;
+          break;
+        case 'HỌC TẬP':
+          description = card.DescriptionStudy;
+          break;
+        case 'TÌNH CẢM':
+          description = card.DescriptionLove;
+          break;
+        default:
+          break;
+      }
+
+      if (description) {
+        prompt += description + '-';
+      }
+      console.log('Final Prompt:', finalPrompt);
+    });
+
+    // Set the finalPrompt state with the result
+    setFinalPrompt(prompt.trim()); // This will update the finalPrompt and trigger re-render
+  };
+
+  const handleMeaningButtonClick = async () => {
+    if (!isMeaningButtonClicked && hiddenCards.length === 3) {
+      generateFinalPrompt(selectedTheme);
+      setIsMeaningButtonClicked(true);
+      setIsLoading(true); 
+
+      try {
+        // Gửi finalPrompt đến API backend
+        const response = await axios.post('http://localhost:1234/api/ask-gemini', {
+          prompt: finalPrompt,
+        });
+
+        // Log câu trả lời từ Gemini API
+        console.log('Câu trả lời từ Gemini:', response.data.answer);
+        setResponseText(response.data.answer);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Lỗi khi lấy câu trả lời từ Gemini:', error);
+        setIsLoading(false);
+      }
+    }
+  };
+
   useEffect(() => {
     if (selectedTheme !== "CHỌN CHỦ ĐỀ") {
+      setFinalPrompt('Bạn hãy đưa ra ý nghĩa chung ít nhất 200 chữ và nhiều nhất 300 chữ cho 3 lá bài tarot tôi vừa bóc được. Nhớ xuống dòng sau 1 đoạn nào đó.  Không được nhắc lại ý nghĩa tôi đã đưa hay nói các câu kiểu với lá đầu tiên bốc được gì đó. Lá 1 có ý nghĩa là ');
       setShowProcessCard(true);
-      setShuffleButtonLeft('37%'); // Đặt lại vị trí của nút "XÀO BÀI"
-      setListCardLeft('37%'); // Đặt lại vị trí của listCard
-      setButtonLabel("XÀO BÀI"); // Cập nhật label nút về "XÀO BÀI"
+      setShuffleButtonLeft('37%');
+      setListCardLeft('37%');
+      setButtonLabel("XÀO BÀI");
       setIsShufflingCompleted(false);
       startCardAnimation();
       setIsSpreadCompleted(false);
       setHiddenCards([]);
+      setCardImages(['quesCard.svg', 'quesCard.svg', 'quesCard.svg']);
+      setIsMeaningButtonClicked(false);
+      setSelectedCards([]);
     }
   }, [selectedTheme]);
 
+  useEffect(() => {
+    console.log(selectedCards);
+  }, [selectedCards]);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('Updated Final Prompt:', finalPrompt);
+  }, [finalPrompt]);
 
   return (
     <div className={styles.container}>
@@ -228,10 +375,9 @@ const Home = () => {
               </button>
               {isThemeOpen && (
                 <ul className={styles.dropdownMenu}>
-                  <li onClick={() => handleThemeSelect("TÌNH YÊU")}>TÌNH YÊU</li>
-                  <li onClick={() => handleThemeSelect("CÔNG VIỆC")}>CÔNG VIỆC</li>
-                  <li onClick={() => handleThemeSelect("SỨC KHOẺ")}>SỨC KHOẺ</li>
-                  <li onClick={() => handleThemeSelect("TÀI CHÍNH")}>TÀI CHÍNH</li>
+                  <li onClick={() => handleThemeSelect("GIA ĐÌNH")}>GIA ĐÌNH</li>
+                  <li onClick={() => handleThemeSelect("HỌC TẬP")}>HỌC TẬP</li>
+                  <li onClick={() => handleThemeSelect("TÌNH CẢM")}>TÌNH CẢM</li>
                 </ul>
               )}
             </div>
@@ -283,6 +429,50 @@ const Home = () => {
                   ))}
                 </div>
               </div>
+
+
+                <div className={styles.threeCards}>
+                  <div className={styles.bigCard}>
+                    <img src={isSpreadCompleted && cardImages[0] ? cardImages[0] : 'quesCard.svg'}  alt="Card 1" />
+                    BẢN THÂN
+                  </div>
+                  <div className={styles.bigCard}>
+                    <img src={isSpreadCompleted && cardImages[0] ? cardImages[1] : 'quesCard.svg'}  alt="Card 2" />
+                    HOÀN CẢNH
+                  </div>
+                  <div className={styles.bigCard}>
+                    <img src={isSpreadCompleted && cardImages[0] ? cardImages[2] : 'quesCard.svg'}  alt="Card 3" />
+                    THỬ THÁCH
+                  </div>
+                </div>
+
+                <div className={styles.meaningButton} onClick={isSpreadCompleted ? handleMeaningButtonClick : undefined}>
+                  <div className={styles.inMeaningButton}>
+                      TIẾT LỘ Ý NGHĨA
+                  </div>
+                </div>
+
+                {isMeaningButtonClicked && (
+                    <div className={styles.displayMeaning}>
+                      <div className={styles.smallTitle}>QUẺ BÓI TAROT NGÀY</div>
+
+                      {/* Nếu đang tải, hiển thị thông báo chờ */}
+                      {isLoading ? (
+                        <div className={styles.loadingMessage}>
+                          Các vì sao đang tìm câu trả lời cho bạn
+                          <img 
+                            src="loading.gif" // Đường dẫn đến GIF của bạn
+                            alt="Loading..." 
+                            className={styles.loadingGif}
+                          />
+                        </div>
+                      ) : (
+                        <div className={styles.meaningText}>
+                          {responseText}
+                        </div>
+                      )}
+                    </div>
+                  )}
             </div>
           )}
         </div>
