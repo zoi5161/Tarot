@@ -1,4 +1,18 @@
 @font-face {
+  font-family: 'iCielBeCool';
+  src: url('../../../public/fonts/iCielBeCool-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OPPO';
+  src: url('../../../public/fonts/OPPOSans-VN-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'BRAMS';
   src: url('../../../public/fonts/Brams-K7DWW.otf') format('opentype');
   font-weight: normal;
@@ -8,8 +22,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 10000px;
+  height: 2000px;
   background-color: #000000;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   overflow-x: hidden;
   position: relative;
   font-family: 'Almendra', serif;
@@ -18,7 +35,7 @@
 .containerWelcome {
   font-family: Arial, sans-serif;
   color: white;
-  height: 130vh;
+  height: 100vh;
   background-image: url('../../../public/banner1.png');  /* Sử dụng đường dẫn từ thư mục public */
   background-size: cover;
   position: relative;
@@ -27,442 +44,158 @@
   align-items: start;
 }
 
-/* Navbar styles */
-.navbar {
-  font-family: 'Almendra', serif;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.navList {
-  display: flex;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  margin-right: 20px;
-}
-
-.navItem {
-  margin: 0 15px;
-}
-
-.navItem a {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  transition: color 0.3s ease;
-  user-select: none;
-}
-
-.navItem a:hover {
-  color: #ffcc00;
-}
-
-.banner {
+.containerOurInfor{
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  margin-top: 150px;
-  height: 100%;
-  text-align: center;
-  padding: 50px;
+  height: 1500px;
+  background-size: contain;
+  background-image: url('../../../public/Background_02.png');
 }
 
-.titleBlack {
-  font-family: 'BRAMS', serif;
-  font-size: 120px;  /* Kích thước chữ lớn hơn */
-  font-weight: normal;
-  color: rgb(52, 52, 52);  /* Màu đen cho chữ */
-  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);  /* Đổ bóng chữ */
-  position: relative; /* Sử dụng position relative để giữ phần tử trong phạm vi của container */
-  top: -5px; /* Đẩy phần tử titleBlack lên cao hơn 5px */
-  left: 5px;
-  z-index: 0;
-  user-select: none;
-  margin: 0;
-  margin-bottom: 30px;
-}
-
-.title {
-  font-family: 'BRAMS', serif;
-  font-size: 120px;
-  font-weight: normal;
-  background: -webkit-linear-gradient(0deg, #E4C396, #F3E6D4, #F9E0C2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.05);
-  position: absolute;
-  user-select: none;
-  z-index: 1;
-  margin: 0;
-}
-
-
-@font-face {
-  font-family: 'WestminsterGotisch';
-  src: url('../../../public/fonts/WESTG___.TTF') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-.westmins{
-  font-family: 'BRAMS', serif;
-  font-size: 120px;
-}
-
-.logo {
-  font-size: 20px;
-  font-weight: 100;
-  color: white;
-  margin-left: 20px;
-  transition: color 0.3s ease, opacity 0.3s ease;  /* Thêm hiệu ứng opacity */
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  user-select: none;
-}
-
-.logoImage {
-  width: 40px;
-  height: 40px;
-  height: auto;
-  margin-right: 10px;
-  transition: opacity 0.3s ease;
-}
-
-.logo:hover {
-  opacity: 0.8;
-}
-
-.logo:hover .logoImage {
-  opacity: 0.8;
-}
-
-.smallTitle {
-  font-family: 'Almendra', serif;
-  font-size: 24px;
-  font-weight: 400;
-  color: white;
-  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);
-  margin-top: -10px;
-  user-select: none;
-}
-
-.number{
-  font-size: 30px;
-  position: relative;
-  top: -2px;
-  left: -2px;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-  margin: 0 8px;
-}
-
-.chosenButton {
-  background: transparent;
-  border-style: solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to right, #E4C396, #F3E6D4, #F9E0C2);
-  padding: 5px;
-  position: relative;
-  width: 350px;
+.containerHead{
   display: flex;
   justify-content: center;
-  user-select: none;
-}
-
-.dropdownButton {
-  font-family: 'Almendra', serif;
+  align-items: center;
+  gap: 30px;
+  height: 1000px;
   width: 100%;
-  padding: 20px;
-  width: 350px;
-  text-align: center;
-  background: transparent;
-  border: 1px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to right, #E4C396, #F3E6D4, #F9E0C2);
-  font-size: 20px;
-  color: white;
-  cursor: pointer;
 }
 
-.dropdownMenu {
-  font-family: 'Almendra', serif;
-  display: block; /* Hiển thị khi menu được mở */
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #F9E0C2;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border: 1px solid #ccc;
-  z-index: 10;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.dropdownMenu.show {
-  display: block;
-  opacity: 1; /* Độ mờ khi mở */
-  transform: translateY(0); /* Vị trí khi mở */
-}
-
-.dropdownMenu li {
-  padding: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  color: black;
-}
-
-.dropdownMenu li:hover {
-  background-color: #E4C396;
-  color: white;
-}
-
-.arrowIcon {
-  width: 16px;
-  height: 16px;
-  margin-left: 10px;
-  transition: transform 0.3s ease;
-}
-
-.arrowIcon.rotate {
-  transform: rotate(180deg);
-}
-
-.processChosenCard{
+.infor{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  align-items: start;
+  height: 500px;
+  width: 43%;
+  margin-top: 100px;
+  margin-left: 100px;
+  /* background-color: aqua; */
 }
 
-.shuffleListCard{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  /* justify-content: center; */
-  gap: 50px;
-  margin-top: 20px;
-  width: 1100px;
-}
-
-.shuffleButton {
-  font-family: 'Almendra', serif;
-  position: relative;
-  display: flex;
-  left: 37%;
-  margin-top: 25px;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 100px;
-  background-color: #e5c297; 
-  color: black;
+.infor1{
+  font-family: 'iCielBeCool', serif;
+  font-size: 23px;
+  color: #f0dc9c;
   font-weight: bold;
-  border-radius: 50%;
-  border: none;
-  transition: background-color 0.3s ease, transform 0.3s ease, left 0.5s ease;
+  text-shadow: #000000 0px 0px 10px;
 }
 
-.shuffleButton:hover {
-  background-color: #F3E6D4;
-  transform: scale(1.05);
+.infor2{
+  font-family: 'OPPO', serif;
+  font-size: 32px;
+  color: white;
+  margin-top: 15px;
 }
 
-.shuffleButton button {
-  font-family: 'Almendra', serif;
-  font-size: 12px;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  border: 2px solid black;
-  background: none;
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-  user-select: none;
-}
-
-.listCard {
-  display: flex;
-  flex-wrap: nowrap;
-  padding: 30px 20px 0 100px;
-  position: relative;
-  left: 36%;
-  z-index: 10;
-  transition: left 0.5s ease;
-}
-
-.card {
-  position: relative;
-  margin-left: -60px;
-  transition: left 0.3s ease, transform 0.3s ease, opacity 1s ease;
-  user-select: none;
-  -webkit-user-drag: none;
-  opacity: 1;
-}
-
-.card.hidden {
-  opacity: 0;
-}
-
-.card:hover {
-  transform: translate(0px, -5px) !important; /* Move the card down by 10px */
-  filter: brightness(0.8);
-}
-
-.cardShuffle {
-  transform: translate(-40px, -15px);
-}
-
-.card img {
-  width: 60px;
-  height: auto;
-  -webkit-user-drag: none;
-}
-
-.threeCards{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+.infor3{
+  font-family: 'OPPO', serif;
+  font-size: 18px;
+  color: white;
   margin-top: 30px;
-  gap: 120px;
+  text-align: justify;
 }
 
-.bigCard{
+.logo{
+  height: 450px;
+  width: 43%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 120px;
+}
+
+.logo img {
+  animation: rotateImage 60s linear infinite; 
+  transition: filter 0.5s ease;
+}
+
+.logo img:hover {
+  filter: brightness(0.5);
+}
+
+@keyframes rotateImage {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.containerOurInfor h1{
+  font-family: 'OPPO', serif;
+  font-size: 23px;
+  color: white;
+  font-weight: bold;
+  text-shadow: #000000 0px 0px 10px;
+}
+
+.listBox{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.box {
   display: flex;
   flex-direction: column;
-  font-family: 'Almendra', serif;
-  gap: 15px;
-  background: -webkit-linear-gradient(0deg, #E4C396, #F3E6D4, #F9E0C2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-.bigCard img{
-  width: 120px;
-  height: auto;
-  -webkit-user-drag: none;
-  user-select: none;
-  border-radius: 10px;
-  border: 3px solid #E4C396;
-}
-
-.meaningButton {
-  margin-top: 50px;
-  background: transparent;
-  border-style: solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to right, #E4C396, #F3E6D4, #F9E0C2);
-  padding: 5px;
+  justify-content: start;
+  width: 30%;
+  height: 240px;
+  background-image: url('../../../public/box.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
   position: relative;
-  width: 350px;
-  display: flex;
-  justify-content: center;
-  user-select: none;
+  border-radius: 40px;
+  border: 2px solid white;
+  box-shadow: 0 0 10px 5px rgba(243, 255, 82, 0.3);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Thêm transition để tạo hiệu ứng mượt */
 }
 
-.inMeaningButton{
-  font-family: 'Almendra', serif;
-  width: 100%;
-  padding: 20px;
-  width: 345px;
-  text-align: center;
-  background: linear-gradient(to right, #E4C396, #F3E6D4, #F9E0C2);
-  border: 1px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to right, #E4C396, #F3E6D4, #F9E0C2);
-  font-size: 20px;
-  color: black;
+.box:hover {
+  box-shadow: 0 0 20px 10px rgba(169, 168, 94, 0.3);
   cursor: pointer;
-  transition: all 1s ease;
 }
 
-.inMeaningButton::after {
+.box::after {
   content: '';
   position: absolute;
+  border-radius: 40px;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.);
+  transition: background-color 0.3s ease;
 }
 
-.inMeaningButton:hover::after {
-  opacity: 1;
+.box:hover::after {
+  background-color: rgba(100, 100, 100, 0.1);
 }
 
-.displayMeaning {
-  height: 500px;
-  width: 900px;
-  color: white; /* Màu chữ sáng để dễ đọc trên nền tối */
-  margin-top: 30px;
-  padding: 20px;
-  border-radius: 20px; /* Các góc bo tròn để tạo sự mềm mại */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Tạo bóng mờ nhẹ giúp phần tử nổi bật */
-  font-family: 'Georgia', serif;
-  line-height: 1.6;
+.headBox{
   text-align: center;
-  position: relative;
-  overflow: hidden;
+  margin-top: 20px;
+  font-size: 20px;
+  font-family: 'OPPO', serif;
+  color: #f0dc9c;
+  text-shadow: #000000 0px 0px 10px;
 }
 
-.meaningText{
-  font-family: 'Georgia', serif;
-  margin-top: 10px;
-  width: 100%;
-  text-align: center;
-  word-wrap: break-word; 
-}
-
-.loadingMessage{
+.contentBox{
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loadingGif{
-  height: 60px;
-  width: 60px;
-}
-
-.date{
-  font-family: 'Almendra', serif;
-  font-size: 28px;
+  flex-direction: column;
+  height: 100%;
+  gap: 5px;
+  margin-top: 25px;
+  margin-left: 10px;
+  font-size: 16px;
+  font-family: 'OPPO', serif;
   color: white;
-  margin-bottom: 6px;
-  text-align: center;
-  user-select: none;
-}
-
-.smallTitleDate{
-  font-family: 'Almendra', serif;
-  font-size: 24px;
-  font-weight: 400;
-  color: white;
-  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);
-  margin-top: -10px;
-  user-select: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
+  text-shadow: #000000 0px 0px 10px;
 }

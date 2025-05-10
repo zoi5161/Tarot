@@ -1,0 +1,79 @@
+/* Navbar styles */
+.navbar {
+  font-family: 'OPPO', serif;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navList {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 100px;
+  gap: 50px;
+}
+
+.navItem {
+  margin: 0 15px;
+}
+
+.navItem a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.navItem a:hover {
+  color: #ffcc00;
+}
+
+.logo {
+  position: relative;
+  /* top: 40px; */
+  left: 20px;
+  font-size: 20px;
+  font-weight: 100;
+  color: white;
+  margin-left: 20px;
+  transition: color 0.3s ease, opacity 0.3s ease;  /* Thêm hiệu ứng opacity */
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  user-select: none;
+
+}
+
+.logoImage {
+  width: 120px;
+  height: 120px;
+  height: auto;
+  margin-right: 10px;
+  transition: opacity 0.3s ease;
+  border-radius: 50%;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+.logo:hover .logoImage {
+  opacity: 0.8;
+}
+
+.navList2 {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 100px;
+  gap: 50px;
+  margin-right: 50px;
+}
