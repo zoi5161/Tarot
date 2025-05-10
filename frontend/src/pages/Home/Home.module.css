@@ -443,3 +443,26 @@
   height: 60px;
   width: 60px;
 }
+
+.date{
+  font-family: 'Almendra', serif;
+  font-size: 28px;
+  color: white;
+  margin-bottom: 6px;
+  text-align: center;
+  user-select: none;
+}
+
+.smallTitleDate{
+  font-family: 'Almendra', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: white;
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);
+  margin-top: -10px;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}

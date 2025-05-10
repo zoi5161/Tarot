@@ -41,6 +41,13 @@ const Home = () => {
   const [responseText, setResponseText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const themeDropdownRef = useRef<HTMLDivElement>(null);
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0'); // Đảm bảo ngày có 2 chữ số
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0, nên cộng thêm 1
+  const year = today.getFullYear();
+
+  const formattedDate = `${day}-${month}-${year}`;
+
 
   const fetchCardData = async () => {
     const response = await fetch('/Information.txt');
@@ -120,7 +127,7 @@ const Home = () => {
       const newCardImages = [...cardImages];
       const nextEmptyIndex = newCardImages.findIndex(image => image === 'quesCard.svg');
       if (nextEmptyIndex !== -1) {
-        newCardImages[nextEmptyIndex] = `cards/card${randomCardIndex + 1}.png`; // Cập nhật ảnh
+        newCardImages[nextEmptyIndex] = `cards/card${randomCardIndex + 1}.jpg`; // Cập nhật ảnh
         setCardImages(newCardImages);
       }
 
@@ -454,7 +461,9 @@ const Home = () => {
 
                 {isMeaningButtonClicked && (
                     <div className={styles.displayMeaning}>
-                      <div className={styles.smallTitle}>QUẺ BÓI TAROT NGÀY</div>
+                      <div className={styles.smallTitleDate}>QUẺ BÓI TAROT NGÀY 
+                        <span className={styles.date}>{formattedDate}</span>
+                      </div>
 
                       {/* Nếu đang tải, hiển thị thông báo chờ */}
                       {isLoading ? (
@@ -468,7 +477,12 @@ const Home = () => {
                         </div>
                       ) : (
                         <div className={styles.meaningText}>
-                          {responseText}
+                          {responseText.split('\n').map((line, index) => (
+                            <React.Fragment key={index}>
+                              {line}
+                              <br />
+                            </React.Fragment>
+                          ))}
                         </div>
                       )}
                     </div>
