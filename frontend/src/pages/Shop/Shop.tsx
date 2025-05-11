@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import emailjs from 'emailjs-com';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Navbar from '../../components/Navbar';
@@ -17,38 +17,22 @@ const Shop: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]); 
   const [cart, setCart] = useState<{ product: Product, quantity: number }[]>([]); 
   const [showModal, setShowModal] = useState(false); 
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // Trạng thái popup thông báo
-  const [popupTimeout, setPopupTimeout] = useState<NodeJS.Timeout | null>(null); // Dùng để xử lý việc tự động ẩn popup sau 10s
-
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('/products.txt');
-        const text = await response.text();
-
-        const productsArray: Product[] = text.split('\n').map((line) => {
-          const [id, name, description, price, imageSrc] = line.split('|');
-          return {
-            id: parseInt(id),
-            name,
-            description,
-            price: parseFloat(price),
-            imageSrc,
-          };
-        });
-
-        setProducts(productsArray);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); 
+  const [popupTimeout, setPopupTimeout] = useState<NodeJS.Timeout | null>(null); 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [randomProducts, setRandomProducts] = useState<Product[]>([]); 
   const phoneRegex = /^[0-9]{10}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const shopCardRef = useRef<HTMLDivElement>(null);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value.toLowerCase()); // Cập nhật query tìm kiếm khi người dùng nhập
+  };
+
+  const filteredProducts = products.filter((product) => 
+    product.name.toLowerCase().includes(searchQuery) || 
+    product.description.toLowerCase().includes(searchQuery)
+  );
 
   const addToCart = (product: Product) => {
     const existingProductIndex = cart.findIndex(item => item.product.id === product.id);
@@ -89,7 +73,7 @@ const Shop: React.FC = () => {
     setShowModal(false);
   };
 
-    const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
@@ -118,29 +102,30 @@ const Shop: React.FC = () => {
         tax: '5,000 VNĐ',  // Thuế
         total: totalAmount,  // Tổng số tiền giỏ hàng
     };
-    const grandTotal = cost.total + cost.shipping + cost.tax;
-    // Gửi email qua EmailJS với các giá trị thay thế vào template
-    emailjs.send(
-        process.env.REACT_APP_EMAILJS_SERVICE_ID as string, // Service ID từ biến môi trường
-        process.env.REACT_APP_EMAILJS_TEMPLATE_ID as string, // Template ID từ biến môi trường
-        {
-        to_email: email, // Email người nhận
-        link_logo: 'https://yourdomain.com/logo.png', // Đường dẫn logo
-        order_id: 'ID0012', // Mã đơn hàng
-        name_custom: name_custom, // Tên khách hàng
-        phone: phone, // Số điện thoại
-        address: address, // Địa chỉ
-        orders: cart.map(item => ({
-            link_image: item.product.imageSrc,
-            name_order: item.product.name,
-            units: item.quantity,
-            price: item.product.price,
-        })),
-        cost: cost, // Truyền giá trị cost vào
-        grandTotal: grandTotal,  // Truyền giá trị cost vào
-        email: email, // Email khách hàng
-        },
-        process.env.REACT_APP_EMAILJS_USER_ID as string  // User ID từ biến môi trường
+
+  const grandTotal = cost.total + cost.shipping + cost.tax;
+  // Gửi email qua EmailJS với các giá trị thay thế vào template
+  emailjs.send(
+      process.env.REACT_APP_EMAILJS_SERVICE_ID as string, // Service ID từ biến môi trường
+      process.env.REACT_APP_EMAILJS_TEMPLATE_ID as string, // Template ID từ biến môi trường
+      {
+      to_email: email, // Email người nhận
+      link_logo: 'https://yourdomain.com/logo.png', // Đường dẫn logo
+      order_id: 'ID0012', // Mã đơn hàng
+      name_custom: name_custom, // Tên khách hàng
+      phone: phone, // Số điện thoại
+      address: address, // Địa chỉ
+      orders: cart.map(item => ({
+          link_image: item.product.imageSrc,
+          name_order: item.product.name,
+          units: item.quantity,
+          price: item.product.price,
+      })),
+      cost: cost, // Truyền giá trị cost vào
+      grandTotal: grandTotal,  // Truyền giá trị cost vào
+      email: email, // Email khách hàng
+      },
+      process.env.REACT_APP_EMAILJS_USER_ID as string  // User ID từ biến môi trường
     ).then(() => {
         // Sau khi thanh toán thành công, xóa giỏ hàng và hiển thị popup thông báo
         setCart([]); // Xóa giỏ hàng
@@ -157,18 +142,133 @@ const Shop: React.FC = () => {
     }).catch((error) => {
         console.error('Có lỗi xảy ra khi gửi email:', error);
     });
+  };
+
+  const getRandomProducts = (products: Product[], number: number, excludeProducts: Product[]) => {
+    // Lọc các sản phẩm chưa được hiển thị
+    const filteredProducts = products.filter(product => 
+      !excludeProducts.some(excludeProduct => excludeProduct.id === product.id)
+    );
+    
+    // Lấy các sản phẩm ngẫu nhiên từ danh sách còn lại
+    const shuffled = [...filteredProducts].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, number);
+  };
+
+  const scrollToShopCard = () => {
+    if (shopCardRef.current) {
+      shopCardRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/products.txt');
+        const text = await response.text();
+
+        const productsArray: Product[] = text.split('\n').map((line) => {
+          const [id, name, description, price, imageSrc] = line.split('|');
+          return {
+            id: parseInt(id),
+            name,
+            description,
+            price: parseFloat(price),
+            imageSrc,
+          };
+        });
+
+        setProducts(productsArray);
+
+        // Lấy 3 sản phẩm ngẫu nhiên lần đầu
+        setRandomProducts(getRandomProducts(productsArray, 3, []));
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
     };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRandomProducts(prevProducts => {
+        const newRandomProducts = getRandomProducts(products, 3, prevProducts);
+        return newRandomProducts;
+      });
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [products]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/products.txt');
+        const text = await response.text();
+
+        const productsArray: Product[] = text.split('\n').map((line) => {
+          const [id, name, description, price, imageSrc] = line.split('|');
+          return {
+            id: parseInt(id),
+            name,
+            description,
+            price: parseFloat(price),
+            imageSrc,
+          };
+        });
+
+        setProducts(productsArray);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.containerWelcome}>
         <Navbar />
-        <h1 className={styles.title}>Chào mừng đến với cửa hàng của chúng tôi!</h1>
+        <h1 className={styles.title}>TAROCITOPIA SHOP</h1>
+        <div className={styles.containerRecommend}>
+          <div className={styles.containerRecommend}>
+            {randomProducts.map((product) => (
+              <div key={product.id} className={styles.recommendCard}>
+                <img 
+                  src={product.imageSrc} 
+                  alt={product.name} 
+                  className={styles.imageRecommendCard} 
+                />
+                <div>{product.name}</div>
+                CHỈ VỚI {formatCurrency(product.price)}
+                <button className={styles.buyButton} onClick={scrollToShopCard}>MUA NGAY</button>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className={styles.containerOurInfor}>
+
+
+
+
+      <div className={styles.containerOurInfor} id="ShopCard" ref={shopCardRef}>
         <FloatingParticles count={200} />
         <div className={styles.productList}>
-          {products.map((product) => (
+          <div className={styles.search}>
+            <input 
+              type="text" 
+              className={styles.searchInput} 
+              placeholder="Tìm kiếm..." 
+              value={searchQuery} 
+              onChange={handleSearchChange}  // Cập nhật giá trị tìm kiếm khi thay đổi
+            />
+            <button className={styles.searchButton}>
+              <img src="searchIcon.png" alt="" />
+            </button>
+          </div>
+          {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
               name={product.name}
@@ -182,6 +282,9 @@ const Shop: React.FC = () => {
 
         <div className={styles.shoppingCart}>
           <h2>Giỏ hàng</h2>
+          <div className={styles.containerBlogImage}>
+            <img src="/blogTitle.svg" alt="blogTitle" className={styles.blogImage} />
+          </div>
           {cart.map((item) => (
             <div key={item.product.id} className={styles.cartItem}>
               <img src={item.product.imageSrc} alt={item.product.name} className={styles.cartItemImage} />

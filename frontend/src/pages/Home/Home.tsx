@@ -13,6 +13,11 @@ const Home = () => {
     window.scrollTo(0, 0);
   };
 
+  const handleBoxShopClick = () => {
+    navigate('/Shop');
+    window.scrollTo(0, 0);
+  };
+
   const handleBoxBlogClick = () => {
     navigate('/Blog');
     window.scrollTo(0, 0);
@@ -70,7 +75,7 @@ const Home = () => {
                     <span><br/>- Trải bài chi tiết 1:1 cùng Reader chuyên nghiệp</span>
                   </div>
                 </div>
-                <div className={styles.box}>
+                <div className={styles.box} onClick={handleBoxShopClick}>
                   <div className={styles.headBox}>CỬA HÀNG TÂM LINH</div>
                   <div className={styles.contentBox}>
                     - Bài Tarot, Oracle
