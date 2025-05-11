@@ -1,0 +1,27 @@
+.blogTable {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.blogCard {
+  display: flex;
+  gap: 20px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blogImage {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.blogInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

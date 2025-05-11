@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getGeminiResponse as getGemini } from '../models/chatModel'; // Gọi hàm từ model
+import { getGeminiResponse as getGemini } from '../models/ChatModel'; // Gọi hàm từ model
 
 export const getGeminiResponse = async (req: Request, res: Response): Promise<Response> => {
   try {

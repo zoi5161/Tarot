@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use, useEffect } from 'react';
 import styles from './ProductCard.module.css';
 
 interface ProductCardProps {
@@ -13,9 +13,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, description, price, ima
   const formatCurrency = (amount: number) => {
     return amount.toLocaleString('vi-VN') + ' VNĐ';
   };
+
+  useEffect(() => {
+    console.log('imageSrc', imageSrc);
+  }, []);
+
   return (
     <div className={styles.card}>
-      <img src={imageSrc} alt={name} className={styles.image} />
+      <img src={`http://localhost:1234${imageSrc}`} alt={name} className={styles.image} />
       <div className={styles.cardDetails}>
         <h3 className={styles.productName}>{name}</h3>
         <p className={styles.productDescription}>{description}</p>

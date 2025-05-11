@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import emailjs from 'emailjs-com';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/NavBar/Navbar';
 import FloatingParticles from '../../components/FloatingParticles/FloatingParticles';
 import styles from './Shop.module.css';
+import axios from 'axios';
 
 interface Product {
+  image: string;
   id: number;
   name: string;
+  nameEn: string;
   description: string;
   price: number;
-  imageSrc: string;
 }
 
 const Shop: React.FC = () => {
@@ -24,6 +26,18 @@ const Shop: React.FC = () => {
   const phoneRegex = /^[0-9]{10}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const shopCardRef = useRef<HTMLDivElement>(null);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get('http://localhost:1234/api/products');
+      setProducts(response.data);  // Dữ liệu trả về từ backend
+      console.log('Products:', response.data);
+      setRandomProducts(getRandomProducts(response.data, 3));  // Lấy 3 sản phẩm ngẫu nhiên lần đầu
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value.toLowerCase()); // Cập nhật query tìm kiếm khi người dùng nhập
@@ -97,13 +111,14 @@ const Shop: React.FC = () => {
     const totalAmount = cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
 
     // Khai báo các giá trị cost
-    const cost = {
-        shipping: '50,000 VNĐ',  // Phí vận chuyển
-        tax: '5,000 VNĐ',  // Thuế
+    let cost = {
+        shipping: 50000,  // Phí vận chuyển
+        tax: 5000,  // Thuế
         total: totalAmount,  // Tổng số tiền giỏ hàng
     };
 
   const grandTotal = cost.total + cost.shipping + cost.tax;
+
   // Gửi email qua EmailJS với các giá trị thay thế vào template
   emailjs.send(
       process.env.REACT_APP_EMAILJS_SERVICE_ID as string, // Service ID từ biến môi trường
@@ -116,13 +131,17 @@ const Shop: React.FC = () => {
       phone: phone, // Số điện thoại
       address: address, // Địa chỉ
       orders: cart.map(item => ({
-          link_image: item.product.imageSrc,
+          link_image: item.product.image,
           name_order: item.product.name,
           units: item.quantity,
-          price: item.product.price,
+          price: formatCurrency(item.product.price),
       })),
-      cost: cost, // Truyền giá trị cost vào
-      grandTotal: grandTotal,  // Truyền giá trị cost vào
+      cost: {
+        shipping: formatCurrency(cost.shipping),  // Format giá trị phí vận chuyển
+        tax: formatCurrency(cost.tax),  // Format giá trị thuế
+        total: formatCurrency(cost.total),  // Format tổng số tiền giỏ hàng
+      },
+      grandTotal: formatCurrency(grandTotal),  // Truyền giá trị cost vào
       email: email, // Email khách hàng
       },
       process.env.REACT_APP_EMAILJS_USER_ID as string  // User ID từ biến môi trường
@@ -144,16 +163,26 @@ const Shop: React.FC = () => {
     });
   };
 
-  const getRandomProducts = (products: Product[], number: number, excludeProducts: Product[]) => {
-    // Lọc các sản phẩm chưa được hiển thị
-    const filteredProducts = products.filter(product => 
-      !excludeProducts.some(excludeProduct => excludeProduct.id === product.id)
-    );
-    
-    // Lấy các sản phẩm ngẫu nhiên từ danh sách còn lại
-    const shuffled = [...filteredProducts].sort(() => 0.5 - Math.random());
+  const getRandomProducts = (products: any[], number: number) => {
+    // Lấy các sản phẩm ngẫu nhiên
+    const shuffled = [...products].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, number);
   };
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const randomProds = getRandomProducts(products, 3);
+      setRandomProducts(randomProds);  // Cập nhật random products khi products thay đổi
+    }
+  }, [products]);  // Khi products thay đổi, cập nhật random products
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRandomProducts(getRandomProducts(products, 3)); // Cập nhật lại randomProducts
+    }, 5000); // 5000 ms = 5s
+
+    return () => clearInterval(intervalId); // Dọn dẹp interval khi component bị hủy
+  }, [products]);
 
   const scrollToShopCard = () => {
     if (shopCardRef.current) {
@@ -161,69 +190,8 @@ const Shop: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('/products.txt');
-        const text = await response.text();
-
-        const productsArray: Product[] = text.split('\n').map((line) => {
-          const [id, name, description, price, imageSrc] = line.split('|');
-          return {
-            id: parseInt(id),
-            name,
-            description,
-            price: parseFloat(price),
-            imageSrc,
-          };
-        });
-
-        setProducts(productsArray);
-
-        // Lấy 3 sản phẩm ngẫu nhiên lần đầu
-        setRandomProducts(getRandomProducts(productsArray, 3, []));
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setRandomProducts(prevProducts => {
-        const newRandomProducts = getRandomProducts(products, 3, prevProducts);
-        return newRandomProducts;
-      });
-    }, 5000);
-
-    return () => clearInterval(intervalId);
-  }, [products]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('/products.txt');
-        const text = await response.text();
-
-        const productsArray: Product[] = text.split('\n').map((line) => {
-          const [id, name, description, price, imageSrc] = line.split('|');
-          return {
-            id: parseInt(id),
-            name,
-            description,
-            price: parseFloat(price),
-            imageSrc,
-          };
-        });
-
-        setProducts(productsArray);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
     fetchProducts();
   }, []);
 
@@ -237,7 +205,7 @@ const Shop: React.FC = () => {
             {randomProducts.map((product) => (
               <div key={product.id} className={styles.recommendCard}>
                 <img 
-                  src={product.imageSrc} 
+                  src={`http://localhost:1234${product.image}`} 
                   alt={product.name} 
                   className={styles.imageRecommendCard} 
                 />
@@ -249,9 +217,6 @@ const Shop: React.FC = () => {
           </div>
         </div>
       </div>
-
-
-
 
       <div className={styles.containerOurInfor} id="ShopCard" ref={shopCardRef}>
         <FloatingParticles count={200} />
@@ -272,9 +237,9 @@ const Shop: React.FC = () => {
             <ProductCard
               key={product.id}
               name={product.name}
-              description={product.description}
+              description={product.nameEn}
               price={product.price}
-              imageSrc={product.imageSrc}
+              imageSrc={product.image}
               onAddToCart={() => addToCart(product)}
             />
           ))}
@@ -287,7 +252,7 @@ const Shop: React.FC = () => {
           </div>
           {cart.map((item) => (
             <div key={item.product.id} className={styles.cartItem}>
-              <img src={item.product.imageSrc} alt={item.product.name} className={styles.cartItemImage} />
+              <img src={item.product.image} alt={item.product.name} className={styles.cartItemImage} />
               <div className={styles.cartItemDetails}>
                 <h3>{item.product.name}</h3>
                 <p>{formatCurrency(item.product.price)}</p>

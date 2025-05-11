@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Predict.module.css';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/NavBar/Navbar';
 import FloatingParticles from '../../components/FloatingParticles/FloatingParticles';
 import axios from 'axios';
 

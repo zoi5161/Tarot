@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import BlogList from '../../components/BlogList/BlogList';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/NavBar/Navbar';
 import FloatingParticles from '../../components/FloatingParticles/FloatingParticles';
 import styles from './Blog.module.css';
 

@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'OPPO';
+  src: url('../../../public/fonts/OPPOSans-VN-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.container {
+  font-family: 'OPPO', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url('../../../public/banner1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow-x: hidden;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(49, 49, 49, 0.799);
+  border: 2px solid white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  color: white;
+}
+
+.input {
+  width: 90%;
+  margin: 10px 0;
+  margin-left: 2px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.loginButton {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  background-color: #45a049;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}

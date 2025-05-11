@@ -3,13 +3,16 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import chatRoutes from './routers/chatRoutes';
+import ChatRoutes from './routers/ChatRoutes';
+import ProductRoutes from './routers/ProductRoutes';
+import BlogRoutes from './routers/BlogRoutes';
+import ImageRoutes from './routers/ImageRoutes';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT_BACKEND || 5000;  
+const port = process.env.PORT_BACKEND || 1234;  
 
 app.use(
     cors({
@@ -22,7 +25,12 @@ app.use(
 
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use('/api', chatRoutes);
+
+app.use('/uploads', express.static('uploads'));
+app.use('/api', ChatRoutes);
+app.use('/api', ProductRoutes);
+app.use('/api', BlogRoutes);
+app.use('/api', ImageRoutes);
 
 const connectDB = async () => {
   try {
