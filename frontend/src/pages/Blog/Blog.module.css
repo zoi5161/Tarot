@@ -1,0 +1,107 @@
+@font-face {
+  font-family: 'BRAMS';
+  src: url('../../../public/fonts/Brams-K7DWW.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OPPO';
+  src: url('../../../public/fonts/OPPOSans-VN-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 2100px;
+  background-color: #000000;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow-x: hidden;
+  position: relative;
+  font-family: 'Almendra', serif;
+}
+
+.containerWelcome {
+  font-family: Arial, sans-serif;
+  color: white;
+  height: 800px;
+  background-image: url('../../../public/banner1.png');
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
+.containerHeaderBlog{
+  font-family: 'OPPO';
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 80%;
+  width: 80%;
+}
+
+.blogDescription{
+  font-family: 'OPPO';
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  text-shadow: black 0.5px 0.5px 0.5px;
+  margin-top: 50px;
+}
+
+.containerOurInfor{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 1300px;
+  background-size: contain;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.blogTitle {
+  font-family: 'BRAMS';
+  font-size: 80px;
+  text-align: center;
+  background: -webkit-linear-gradient(0deg, #E4C396, #F3E6D4, #F9E0C2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 60px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Thêm hiệu ứng mượt mà khi hover */
+}
+
+.blogTitle:hover {
+  /* Viền chữ phát sáng khi hover với các màu giống gradient */
+  text-shadow: 
+    0 0 10px rgba(228, 195, 150, 0.8), /* Sáng nhẹ với màu #E4C396 */
+    0 0 10px rgba(243, 230, 212, 0.8), /* Sáng mạnh với màu #F3E6D4 */
+    0 0 10px rgba(249, 224, 194, 0.8); /* Sáng mạnh với màu #F9E0C2 */
+}
+
+
+.blogImage{
+  width: 300px;
+}
+
+.blogListRef{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

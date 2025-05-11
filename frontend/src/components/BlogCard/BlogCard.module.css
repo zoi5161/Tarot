@@ -1,0 +1,38 @@
+.card {
+  width: 100%;
+  border: 2px solid #ddd;
+  padding: 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  transition: transform 0.5s ease, box-shadow 0.2s ease; /* Thêm hiệu ứng cho box-shadow */
+  display: flex;
+  border-radius: 10px;
+  gap: 30px;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 165, 0, 0.7); /* Viền phát sáng màu cam khi hover */
+}
+
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.description {
+  font-size: 1rem;
+  color: #9a9a9a;
+}
+
+.date {
+  font-size: 16px;
+  color: #888;
+}
+
+.image img{
+  width: 120px;
+  border-radius: 5px;
+}

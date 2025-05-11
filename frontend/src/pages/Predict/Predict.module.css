@@ -10,7 +10,7 @@
   flex-direction: column;
   height: 2000px;
   background-color: #000000;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
   font-family: 'Almendra', serif;
 }
@@ -18,9 +18,10 @@
 .containerWelcome {
   font-family: Arial, sans-serif;
   color: white;
-  height: 1000px;
+  height: 800px;
   background-image: url('../../../public/banner1.png');  /* Sử dụng đường dẫn từ thư mục public */
   background-size: cover;
+  background-repeat: no-repeat;
   position: relative;
   display: flex;
   justify-content: center;
@@ -30,10 +31,9 @@
 .containerOurInfor{
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 1500px;
-  background-size: contain;
-  background-image: url('../../../public/Background_02.png');
+  align-items: start;
+  height: 1300px;
+  background-size: cover;
 }
 
 .banner {
@@ -278,7 +278,7 @@
   height: auto;
   -webkit-user-drag: none;
   border-radius: 5px;
-  border: 2px solid #E4C396;
+  border: 1px solid #E4C396;
 }
 
 .threeCards{
@@ -286,6 +286,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  text-align: center;
   margin-top: 30px;
   gap: 120px;
 }
@@ -376,7 +377,7 @@
   font-family: 'Georgia', serif;
   margin-top: 10px;
   width: 100%;
-  text-align: center;
+  text-align: justify;
   word-wrap: break-word; 
 }
 

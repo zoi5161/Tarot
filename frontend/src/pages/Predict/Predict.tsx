@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Predict.module.css';
 import Navbar from '../../components/Navbar';
+import FloatingParticles from '../../components/FloatingParticles/FloatingParticles';
 import axios from 'axios';
 
 interface Card {
@@ -37,7 +38,7 @@ const Home = () => {
   const [cardImages, setCardImages] = useState(['quesCard.jpg', 'quesCard.jpg', 'quesCard.jpg']);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [isMeaningButtonClicked, setIsMeaningButtonClicked] = useState(false);
-  const [finalPrompt, setFinalPrompt] = useState('Bạn hãy đưa ra ý nghĩa chung khoảng 200-300 chữ cho 3 lá bài tarot tôi vừa bóc được. Tuyệt đối trong ý nghĩa chung không được nhắc đơn lẻ về 3 lá bài. Không cần câu dẫn gì hết, chỉ cần trả lời ý nghĩa chung thôi. Mỗi ý nghĩa cách nhau 1 dấu "-":');
+  const [finalPrompt, setFinalPrompt] = useState('Bạn hãy đưa ra ý nghĩa chung khoảng 200-300 chữ cho 3 lá bài tarot tôi vừa bóc được. Tuyệt đối trong ý nghĩa chung không được nhắc đơn lẻ về 3 lá bài. Không cần dấu gạch đầu dòng và cũng không được dùng dấu -. Không cần câu dẫn gì hết, chỉ cần trả lời ý nghĩa chung thôi. Mỗi ý nghĩa cách nhau 1 dấu "-":');
   const selectedCardIndexes: number[] = [];
   const [responseText, setResponseText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -103,7 +104,6 @@ const Home = () => {
       const newHiddenCards = [...hiddenCards, index];
       setHiddenCards(newHiddenCards);
 
-      // Chọn một số ngẫu nhiên duy nhất
       const randomCardIndex = await getUniqueRandomCardIndex(); // Lấy số ngẫu nhiên không trùng
       if (randomCardIndex === -1) {
         console.log('Không còn lá bài nào để chọn.');
@@ -141,11 +141,21 @@ const Home = () => {
     const cardsData = await fetchCardData();
     if (!cardsData || cardsData.length === 0) return -1;
 
+    // Tạo một mảng để lưu các chỉ số thẻ đã bị loại (bao gồm cả n và n + 78)
+    let excludedIndexes = [...selectedCardIndexes];
+
+    // Thêm vào mảng loại trừ các chỉ số n + 78 đối với các thẻ đã chọn
+    selectedCardIndexes.forEach(index => {
+      if (index + 78 < cardsData.length) {
+        excludedIndexes.push(index + 78);
+      }
+    });
+
     // Tạo số ngẫu nhiên và kiểm tra trùng lặp
     let randomCardIndex;
     do {
       randomCardIndex = Math.floor(Math.random() * cardsData.length); // Tạo số ngẫu nhiên từ 0 đến length
-    } while (selectedCardIndexes.includes(randomCardIndex)); // Kiểm tra nếu số đã được chọn
+    } while (excludedIndexes.includes(randomCardIndex)); // Kiểm tra nếu số đã được chọn hoặc bị loại
 
     // Lưu số đã chọn vào mảng
     selectedCardIndexes.push(randomCardIndex);
@@ -252,7 +262,7 @@ const Home = () => {
   };
 
   const generateFinalPrompt = (theme: string) => {
-    let prompt = 'Bạn hãy đưa ra ý nghĩa chung khoảng 200-300 chữ cho 3 lá bài tarot tôi vừa bóc được. Tuyệt đối trong ý nghĩa chung không được nhắc đơn lẻ về 3 lá bài. Không cần câu dẫn gì hết, chỉ cần trả lời ý nghĩa chung thôi. Mỗi ý nghĩa cách nhau 1 dấu "-":';
+    let prompt = 'Bạn hãy đưa ra ý nghĩa chung khoảng 200-300 chữ cho 3 lá bài tarot tôi vừa bóc được. Tuyệt đối trong ý nghĩa chung không được nhắc đơn lẻ về 3 lá bài. Không cần dấu gạch đầu dòng và cũng không được dùng dấu -. Không cần câu dẫn gì hết, chỉ cần trả lời ý nghĩa chung thôi. Mỗi ý nghĩa cách nhau 1 dấu "-":';
     
     // Loop through selected cards and create the prompt based on selected theme
     selectedCards.forEach((card) => {
@@ -307,7 +317,7 @@ const Home = () => {
 
   useEffect(() => {
     if (selectedTheme !== "CHỌN CHỦ ĐỀ") {
-      setFinalPrompt('Bạn hãy đưa ra ý nghĩa chung ít nhất 200 chữ và nhiều nhất 300 chữ cho 3 lá bài tarot tôi vừa bóc được. Nhớ xuống dòng sau 1 đoạn nào đó.  Không được nhắc lại ý nghĩa tôi đã đưa, tuyệt đối trong câu trả lời không được có các câu kiểu "Lá đầu tiên có ý nghĩa", "Lá bài thứ 2", "Lá bài thứ 3" gì đó. Không cần câu dẫn gì hết, chỉ cần trả lời ý nghĩa chung thôi. Mỗi ý nghĩa cách nhau 1 dấu "-":');
+      setFinalPrompt('Bạn hãy đưa ra ý nghĩa chung ít nhất 200 chữ và nhiều nhất 300 chữ cho 3 lá bài tarot tôi vừa bóc được. Nhớ xuống dòng sau 1 đoạn nào đó.  Không được nhắc lại ý nghĩa tôi đã đưa, tuyệt đối trong câu trả lời không được có các câu kiểu "Lá đầu tiên có ý nghĩa", "Lá bài thứ 2", "Lá bài thứ 3" gì đó. Không cần dấu gạch đầu dòng và cũng không được dùng dấu -. Không cần câu dẫn gì hết, chỉ cần trả lời ý nghĩa chung thôi. Mỗi ý nghĩa cách nhau 1 dấu "-":');
       setShowProcessCard(true);
       setShuffleButtonLeft('37%');
       setListCardLeft('37%');
@@ -399,6 +409,11 @@ const Home = () => {
             </div>
           </div>
 
+
+        </div>
+      </div>
+      <div className={styles.containerOurInfor}>
+        <FloatingParticles count={200} />
           {/* Chỉ hiển thị khi cả bộ bài và chủ đề đã được chọn */}
           {selectedTheme !== "CHỌN CHỦ ĐỀ" && (
             <div id="processChosenCard" className={`${styles.processChosenCard} ${showProcessCard ? styles.show : ''}`}>
@@ -498,9 +513,6 @@ const Home = () => {
                   )}
             </div>
           )}
-        </div>
-      </div>
-      <div className={styles.containerOurInfor}>
       </div>
     </div>
   );

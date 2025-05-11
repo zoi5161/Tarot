@@ -22,7 +22,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 2000px;
+  height: 2100px;
   background-color: #000000;
   background-size: contain;
   background-repeat: no-repeat;
@@ -35,7 +35,7 @@
 .containerWelcome {
   font-family: Arial, sans-serif;
   color: white;
-  height: 100vh;
+  height: 800px;
   background-image: url('../../../public/banner1.png');  /* Sử dụng đường dẫn từ thư mục public */
   background-size: cover;
   position: relative;
@@ -49,9 +49,26 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  height: 1500px;
+  height: 1300px;
   background-size: contain;
-  background-image: url('../../../public/Background_02.png');
+}
+
+.header{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 1000px;
+  width: 100%;
+}
+
+.footer{
+  height: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 100px
 }
 
 .containerHead{
@@ -61,6 +78,7 @@
   gap: 30px;
   height: 1000px;
   width: 100%;
+  overflow: hidden;
 }
 
 .infor{
@@ -76,7 +94,7 @@
 
 .infor1{
   font-family: 'iCielBeCool', serif;
-  font-size: 23px;
+  font-size: 28px;
   color: #f0dc9c;
   font-weight: bold;
   text-shadow: #000000 0px 0px 10px;
@@ -93,7 +111,7 @@
   font-family: 'OPPO', serif;
   font-size: 18px;
   color: white;
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: justify;
 }
 
@@ -111,15 +129,17 @@
 }
 
 .logo img:hover {
-  filter: brightness(0.5);
+  filter: brightness(1.5);
 }
 
 @keyframes rotateImage {
   0% {
     transform: rotate(0deg);
+    border-radius: 50%;
   }
   100% {
     transform: rotate(360deg);
+    border-radius: 50%;
   }
 }
 
@@ -127,6 +147,7 @@
   font-family: 'OPPO', serif;
   font-size: 23px;
   color: white;
+  margin-top: 100px;
   font-weight: bold;
   text-shadow: #000000 0px 0px 10px;
 }
@@ -136,9 +157,8 @@
   justify-content: space-around;
   align-items: center;
   height: 400px;
-  width: 100%;
+  width: 90%;
   gap: 30px;
-  margin-top: 50px;
 }
 
 .box {
@@ -146,9 +166,10 @@
   flex-direction: column;
   justify-content: start;
   width: 30%;
-  height: 240px;
+  height: 250px;
   background-image: url('../../../public/box.jpg');
-  background-size: contain;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   position: relative;
   border-radius: 40px;
@@ -198,4 +219,120 @@
   font-family: 'OPPO', serif;
   color: white;
   text-shadow: #000000 0px 0px 10px;
+}
+
+.inforFooter{
+  width: 90%;
+  height: 400px;
+  font-size: 20px;
+  text-align: justify;;
+  color: white;
+  font-family: 'OPPO', serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.leftInforFooter{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightInforFooter{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageJump{
+  width: 300px;
+}
+
+.imageJump {
+  animation: moveUpDown 3s infinite;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.hr{
+  height: 1px;
+  width: 100%;
+  background-color: white;
+}
+
+.leftPanel{
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.titleLeftFooter{
+  color: white;
+  text-align: center;
+  font-family: 'OPPO', serif;
+  margin-top: 10px;
+}
+
+.logoFooter{
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.descriptionLeftFooter{
+  font-family: 'OPPO', serif;
+  color: white;
+  text-align: center;
+  font-family: 'OPPO', serif;
+}
+
+.rightPanel{
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleRightPanel{
+  color: white;
+  font-family: 'OPPO', serif;
+  margin-left: 50px;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+li{
+  color: white;
+  font-family: 'OPPO', serif;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.logoFooter:hover{
+  opacity: 0.5;
+}
+
+.imageEffect {
+  transition: opacity 0.5s ease-in-out; /* Tạo hiệu ứng mượt mà */
 }
