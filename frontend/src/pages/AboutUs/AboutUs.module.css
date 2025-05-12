@@ -110,6 +110,10 @@
   width: 270px;
   height: 270px;
   border-radius: 50%;
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -ms-user-select: none;
   box-shadow: 0 0 15px 10px rgba(149, 149, 149, 0.7);
 }
 

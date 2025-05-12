@@ -22,20 +22,3 @@ export const registerAdmin = async (username: string, password: string) => {
 
   return newAdmin;
 };
-
-// Hàm kiểm tra đăng nhập của quản trị viên
-export const loginAdmin = async (username: string, password: string) => {
-  // Tìm kiếm quản trị viên với username
-  const admin = await AdminModel.findOne({ username });
-  if (!admin) {
-    throw new Error('Tài khoản không tồn tại!');
-  }
-
-  // Kiểm tra mật khẩu
-  const isPasswordValid = await bcrypt.compare(password, admin.password);
-  if (!isPasswordValid) {
-    throw new Error('Sai mật khẩu!');
-  }
-
-  return admin;  // Trả về thông tin quản trị viên nếu đăng nhập thành công
-};

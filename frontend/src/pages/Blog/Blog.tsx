@@ -38,8 +38,8 @@ const Blog: React.FC = () => {
         <div className={styles.blogListRef} ref={blogListRef}>
           <BlogList />
         </div>
-        <Footer/>
       </div>
+      <Footer/>
     </div>
   );
 };

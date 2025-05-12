@@ -227,7 +227,7 @@ const Shop: React.FC = () => {
 
       <div className={styles.containerOurInfor} id="ShopCard" ref={shopCardRef}>
         <FloatingParticles count={150} />
-        <div className={styles.productList}>
+        <div className={styles.productListAndSearch}>
           <div className={styles.search}>
             <input 
               type="text" 
@@ -240,19 +240,21 @@ const Shop: React.FC = () => {
               <img src="searchIcon.png" alt="" />
             </button>
           </div>
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product._id}
-              name={product.name}
-              nameEn={product.nameEn}
-              description={product.description}
-              price={product.price}
-              stock={product.stock}
-              imageSrc={product.image}
-              quantity={cart.find(item => item.product._id === product._id)?.quantity || 0}
-              onAddToCart={() => addToCart(product)}
-            />
-          ))}
+          <div className={styles.productList}>
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product._id}
+                name={product.name}
+                nameEn={product.nameEn}
+                description={product.description}
+                price={product.price}
+                stock={product.stock}
+                imageSrc={product.image}
+                quantity={cart.find(item => item.product._id === product._id)?.quantity || 0}
+                onAddToCart={() => addToCart(product)}
+              />
+            ))}
+          </div>
         </div>
 
         <div className={styles.shoppingCart}>
@@ -269,12 +271,7 @@ const Shop: React.FC = () => {
                 <div className={styles.quantityControls}>
                   <button onClick={() => decreaseQuantity(item.product)}>-</button>
                   <span>{item.quantity}</span>
-                  <button 
-                    onClick={() => addToCart(item.product)} 
-                    disabled={item.quantity >= item.product.stock}
-                  >
-                    +
-                  </button>
+                  <button onClick={() => addToCart(item.product)} disabled={item.quantity >= item.product.stock}>+</button>
                 </div>
                 {item.quantity >= item.product.stock && (
                   <span className={styles.outOfStock}>Hết hàng</span>
@@ -286,7 +283,7 @@ const Shop: React.FC = () => {
 
           <div className={styles.cartSummary}>
             <h3 className={styles.totalPrice}>Tổng tiền: {formatCurrency(totalAmount)}</h3>
-            <button className={styles.checkoutButton} onClick={handleCheckout}>
+            <button className={styles.checkoutButton} onClick={handleCheckout} disabled={totalAmount === 0}>
               Thanh toán
             </button>
           </div>

@@ -10,6 +10,31 @@ const Navbar = () => {
     setIsServiceClicked(true);
   };
 
+  const handlePredictClick = () => {
+    navigate('/Predict');
+    window.scrollTo(0, 0);
+  };
+
+  const handleShopClick = () => {
+    navigate('/Shop');
+    window.scrollTo(0, 0);
+  };
+
+  const handleHomeClick = () => {
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
+
+  const handleAboutUsClick = () => {
+    navigate('/AboutUs');
+    window.scrollTo(0, 0);
+  };
+
+  const handleBlogClick = () => {
+    navigate('/Blog');
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     if (isServiceClicked) {
       navigate('/'); // Navigate to the home page
@@ -28,16 +53,16 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <ul className={styles.navList}>
-        <li className={styles.navItem}><a href="/">TRANG CHỦ</a></li>
-        <li className={styles.navItem}><a href="/Predict">BÓI BÀI TAROT</a></li>
-        <li className={styles.navItem}><a href="/Shop">CỬA HÀNG</a></li>
+        <li className={styles.navItem}><a onClick={handleHomeClick}>TRANG CHỦ</a></li>
+        <li className={styles.navItem}><a onClick={handlePredictClick}>BÓI BÀI TAROT</a></li>
+        <li className={styles.navItem}><a onClick={handleShopClick}>CỬA HÀNG</a></li>
       </ul>
-      <a href="/" className={styles.logo}>
+      <a onClick={handleHomeClick} className={styles.logo}>
         <img src="/logo.png" alt="Logo" className={styles.logoImage} />
       </a>
       <ul className={styles.navList2}>
-        <li className={styles.navItem}><a href="/AboutUs">VỀ CHÚNG TÔI</a></li>
-        <li className={styles.navItem}><a href="/Blog">BLOG</a></li>
+        <li className={styles.navItem}><a onClick={handleAboutUsClick}>VỀ CHÚNG TÔI</a></li>
+        <li className={styles.navItem}><a onClick={handleBlogClick}>BLOG</a></li>
         <li className={styles.navItem}><a onClick={handleServiceClick} className={styles.service}>DỊCH VỤ</a></li>
       </ul>
     </nav>

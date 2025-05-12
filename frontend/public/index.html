@@ -2,13 +2,98 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval';">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tarocitopia</title>
     <link rel="icon" href="./logoWeb.png" type="image/png" />
     <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      /* Tùy chỉnh thanh cuộn cho trình duyệt webkit (Chrome, Safari, Edge) */
+      ::-webkit-scrollbar {
+        background-color: none;
+        width: 0px; /* Kích thước chiều rộng của thanh cuộn dọc */
+        height: 4px; /* Kích thước chiều cao của thanh cuộn ngang */
+      }
+
+      /* Tùy chỉnh màu sắc của thanh cuộn */
+      ::-webkit-scrollbar-track {
+        z-index: -999;
+        background: transparent; /* Màu nền của vùng chứa thanh cuộn */
+        background-color: none;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #888; /* Màu của phần thanh cuộn (có thể chỉnh theo ý thích) */
+        border-radius: 10px; /* Tạo các góc bo tròn cho thanh cuộn */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Màu khi người dùng hover lên thanh cuộn */
+      }
+
+      /* CSS để cố định vị trí icon ở góc trên bên trái */
+      #sound-icon {
+        position: fixed;
+        width: 45px;
+        height: 45px;
+        top: 0px;
+        right: 0px;
+        cursor: pointer;
+        z-index: 1000;
+        font-size: 30px;
+        border-radius: 0 0 0 70%;
+        border: 2px solid #ccc;
+        border-top: none;
+        border-right: none;
+        background: transparent;
+        padding: 10px;
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: end;
+      }
+      #sound-icon:hover {
+        background-color: #767750;
+      }
+    </style>
   </head>
   <body>
+    <audio id="shuffle-sound" src="/sounds/shuffle.mp3" preload="auto"></audio>
+    <audio id="flip-sound" src="/sounds/flip.mp3" preload="auto"></audio>
+    <audio id="spread-sound" src="/sounds/spread.mp3" preload="auto"></audio>
+    <audio id="background-music" loop autoplay volume="0.2">
+      <source src="/sounds/nhacnen.MP3" type="audio/mp3">
+    </audio>
+
+    <!-- Icon âm thanh -->
+    <div id="sound-icon">
+      <img src="volume.png" alt="Sound Icon" width="30" height="30" id="sound-image">
+    </div>
+
     <div id="root"></div>
+
+    <script>
+      const audioElement = document.getElementById('background-music');
+      const soundIcon = document.getElementById('sound-icon');
+      const soundImage = document.getElementById('sound-image'); // Lấy thẻ img của icon
+
+      // Bật/tắt âm thanh khi người dùng nhấp vào icon
+      soundIcon.addEventListener('click', () => {
+        if (audioElement.paused) {
+          audioElement.play();
+          soundImage.src = "volume.png"; // Đổi thành icon âm thanh khi phát
+        } else {
+          audioElement.pause();
+          soundImage.src = "mute.png"; // Đổi thành icon mute khi âm thanh bị tắt
+        }
+      });
+
+      // Tự động phát nhạc khi trang được tải
+      audioElement.play();
+
+      // Khi người dùng điều hướng trang, âm thanh vẫn phát
+      window.onbeforeunload = () => {
+        audioElement.pause(); // Tạm dừng nhạc khi rời khỏi trang
+      };
+    </script>
   </body>
 </html>

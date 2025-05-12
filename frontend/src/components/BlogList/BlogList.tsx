@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import styles from './BlogList.module.css';
 
 interface Post {
-  id: number;
+  _id: number;
   title: string;
-  description: string;
+  shortDescription: string;
   content: string;
-  imageSrc: string;
+  image: string;
   date: string;
 }
 
@@ -21,43 +21,43 @@ const BlogList: React.FC = () => {
   // Sử dụng useRef để tham chiếu đến phần tử blogListRef
   const blogListRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('/posts.txt');
-        const text = await response.text();
-        
-        const postsArray: Post[] = text.split('\n').map(line => {
-          const [id, title, description, content, date, imageSrc] = line.split('|');
-          return {
-            id: parseInt(id),
-            title,
-            description,
-            content,
-            date,
-            imageSrc,
-          };
-        });
-        
-        setPosts(postsArray);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
+useEffect(() => {
+  const fetchPosts = async () => {
+    try {
+      // Gọi API để lấy dữ liệu blog từ database
+      const response = await fetch('http://localhost:1234/api/blogs'); // Đảm bảo rằng URL API chính xác
+      const data = await response.json(); // Dữ liệu nhận được từ API
 
-    fetchPosts();
-  }, []);
+      // Cập nhật các post từ dữ liệu API
+      const postsArray: Post[] = data.map((post: any, index: number) => {
+        return {
+          _id: post._id, // Sử dụng thứ tự tăng dần từ 1
+          title: post.title,
+          shortDescription: post.shortDescription,
+          content: post.content,
+          date: post.publishDate,
+          image: post.image,
+        };
+      });
+
+      setPosts(postsArray); // Lưu bài viết vào state
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
+
+  fetchPosts();
+}, []);
+
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  // Điều hướng đến trang chi tiết bài viết
   const handleCardClick = (postId: number) => {
     navigate(`/blog/${postId}`);
   };
 
-  // Hàm để chuyển trang và cuộn đến BlogList
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     if (blogListRef.current) {
@@ -78,13 +78,12 @@ const BlogList: React.FC = () => {
         <div className={styles.blogCards}>
           {currentPosts.map((post) => (
             <BlogCard
-              key={post.id}
               title={post.title}
-              description={post.description}
+              shortDescription={post.shortDescription}
               content={post.content}
-              src={post.imageSrc}
+              src={`http://localhost:1234${post.image}`}
               date={post.date}
-              onClick={() => handleCardClick(post.id)} // Điều hướng khi click
+              onClick={() => handleCardClick(post._id)}
             />
           ))}
         </div>

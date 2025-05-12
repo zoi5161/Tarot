@@ -1,6 +1,0 @@
-1|Bộ bài Tarot cao cấp|Collector's Decks|1200000|/cards/card1.jpg
-2|Tinh dầu tâm linh|Aromatherapy Oils|250000|/cards/card2.jpg
-3|Nến nghi lễ|Ritual Candles|250000|/cards/card3.jpg
-4|Đá phong thủy|Crystal Healing|600000|/cards/card4.jpg
-5|Vòng tay phong thủy|Feng Shui Bracelet|350000|/cards/card5.jpg
-6|Nhật ký Tarot|Tarot Diary|150000|/cards/card6.jpg

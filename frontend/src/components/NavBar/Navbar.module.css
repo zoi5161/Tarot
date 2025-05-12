@@ -23,6 +23,7 @@
 
 .navItem {
   margin: 0 15px;
+  cursor: pointer;
 }
 
 .navItem a {
@@ -51,7 +52,7 @@
   justify-content: center;
   text-decoration: none;
   user-select: none;
-
+  cursor: pointer;
 }
 
 .logoImage {

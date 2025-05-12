@@ -100,9 +100,9 @@
   object-fit: cover;
   border-radius: 25px;
   border: 3px solid #6A1B9A;
-  user-select: none; /* Prevent text selection */
-  -webkit-user-drag: none; /* Prevent image dragging in Webkit browsers (Chrome, Safari) */
-  -moz-user-drag: none; /* Prevent image dragging in Firefox */
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
   -ms-user-select: none;
 }
 

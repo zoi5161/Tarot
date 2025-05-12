@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Predict from './pages/Predict/Predict';
 import Blog from './pages/Blog/Blog';
@@ -10,6 +10,7 @@ import Manage from './pages/Admin/Manage';
 import AboutUs from './pages/AboutUs/AboutUs';
 
 const App = () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   return (
     <Router>
       <Routes>
@@ -19,8 +20,8 @@ const App = () => {
         <Route path="/Blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/AboutUs" element={<AboutUs />} />
-        <Route path="/Manage" element={<Manage />} />
-        <Route path="/Admin" element={<Login />} />
+        <Route path="/Manage" element={isLoggedIn ? <Manage /> : <Navigate to="/Admin" />} />
+        <Route path="/Admin" element={isLoggedIn ? <Manage /> : <Login />} />
       </Routes>
     </Router>
   );

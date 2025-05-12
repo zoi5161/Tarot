@@ -38,6 +38,11 @@
   
 }
 
+.buttonGroupTop{
+  display: flex;
+  gap: 20px;
+}
+
 .addButton {
   font-family: 'OPPO', sans-serif;
   padding: 15px 0px;
@@ -54,6 +59,24 @@
 
 .addButton:hover {
   background-color: #45a049;
+}
+
+.homeButton {
+  font-family: 'OPPO', sans-serif;
+  padding: 15px 0px;
+  width: 120px;
+  background-color: #7b5b44;
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 20px;
+}
+
+.homeButton:hover {
+  background-color: #794723;
 }
 
 .footer {
@@ -133,8 +156,17 @@
   cursor: pointer;
 }
 
-input, textarea {
-  width: 100%;
+.popupBlogTag{
+  overflow-y: auto;
+}
+
+.BlogTag{
+  width: 800px;
+}
+
+.inputPopup, .addTextArea {
+  min-width: 100%;
+  max-width: 100%;
   padding: 10px 0px 10px 10px;
   margin: 5px 0;
   border: 1px solid #ccc;

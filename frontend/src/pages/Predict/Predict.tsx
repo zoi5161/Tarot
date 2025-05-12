@@ -45,8 +45,8 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const themeDropdownRef = useRef<HTMLDivElement>(null);
   const today = new Date();
-  const day = String(today.getDate()).padStart(2, '0'); // Đảm bảo ngày có 2 chữ số
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0, nên cộng thêm 1
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
   const year = today.getFullYear();
 
   const formattedDate = `${day}-${month}-${year}`;
@@ -102,6 +102,8 @@ const Home = () => {
 
   const handleCardClick = async (index: number) => {
     if (hiddenCards.length < 3 && !hiddenCards.includes(index) && isSpreadCompleted) {
+      const flipSound = document.getElementById('flip-sound') as HTMLAudioElement;
+      flipSound.play();
       const newHiddenCards = [...hiddenCards, index];
       setHiddenCards(newHiddenCards);
 
@@ -138,33 +140,32 @@ const Home = () => {
     }
   };
 
-const getUniqueRandomCardIndex = async () => {
-  const cardsData = await fetchCardData();
-  if (!cardsData || cardsData.length === 0) return -1;
+  const getUniqueRandomCardIndex = async () => {
+    const cardsData = await fetchCardData();
+    if (!cardsData || cardsData.length === 0) return -1;
 
-  // Create an array to store excluded card indexes
-  let excludedIndexes = [...selectedCardIndexes];
+    // Create an array to store excluded card indexes
+    let excludedIndexes = [...selectedCardIndexes];
 
-  // Add excluded indexes n and n+78 for each selected card
-  selectedCardIndexes.forEach(index => {
-    excludedIndexes.push(index);        // Exclude the nth card
-    if (index + 78 < cardsData.length) {
-      excludedIndexes.push(index + 78); // Exclude the nth+78 card
-    }
-  });
+    // Add excluded indexes n and n+78 for each selected card
+    selectedCardIndexes.forEach(index => {
+      excludedIndexes.push(index);        // Exclude the nth card
+      if (index + 78 < cardsData.length) {
+        excludedIndexes.push(index + 78); // Exclude the nth+78 card
+      }
+    });
 
-  // Generate a random number and check for duplicates
-  let randomCardIndex: number;  // Explicitly define the type of randomCardIndex as 'number'
-  do {
-    randomCardIndex = Math.floor(Math.random() * cardsData.length); // Generate a random number
-  } while (excludedIndexes.includes(randomCardIndex)); // Check if the number is already excluded
+    // Generate a random number and check for duplicates
+    let randomCardIndex: number;  // Explicitly define the type of randomCardIndex as 'number'
+    do {
+      randomCardIndex = Math.floor(Math.random() * cardsData.length); // Generate a random number
+    } while (excludedIndexes.includes(randomCardIndex)); // Check if the number is already excluded
 
-  // Update the selectedCardIndexes state with the selected index
-  setSelectedCardIndexes(prevIndexes => [...prevIndexes, randomCardIndex]);
+    // Update the selectedCardIndexes state with the selected index
+    setSelectedCardIndexes(prevIndexes => [...prevIndexes, randomCardIndex]);
 
-  return randomCardIndex; // Return the non-duplicate index
-};
-
+    return randomCardIndex; // Return the non-duplicate index
+  };
 
   const startCardAnimation = () => {
     setAnimationStarted(true);
@@ -190,10 +191,12 @@ const getUniqueRandomCardIndex = async () => {
     }
 
     let counter = 0;
-    setIsShuffling(true); // Bắt đầu quá trình xào bài
-    setIsShufflingCompleted(false); // Đánh dấu chưa hoàn tất xào bài
+    setIsShuffling(true);
+    setIsShufflingCompleted(false);
 
-    // Hàm sẽ thực hiện một lần "xào bài"
+    const shuffleSound = document.getElementById('shuffle-sound') as HTMLAudioElement;
+    shuffleSound.play();
+
     const shuffleOnce = () => {
       setPositionCard3Animation([-70, -20]);
 
@@ -222,16 +225,16 @@ const getUniqueRandomCardIndex = async () => {
       }, 400);
     };
 
-    // Hàm lặp lại shuffleOnce 5 lần liên tiếp
     const loopShuffle = () => {
       if (counter < 7) {
         shuffleOnce();
         counter++;
         setTimeout(loopShuffle, 400);
       } else {
-        // Khi xào bài xong, thay đổi trạng thái và cập nhật nút
         setIsShuffling(false);
-        setIsShufflingCompleted(true); // Đánh dấu xào bài đã hoàn tất
+        setIsShufflingCompleted(true);
+        shuffleSound.pause();
+        shuffleSound.currentTime = 0;
       }
     };
 
@@ -249,6 +252,8 @@ const getUniqueRandomCardIndex = async () => {
 
     setCardPositions(positions);
     setIsCardVisible(true);
+    const spreadSound = document.getElementById('spread-sound') as HTMLAudioElement;
+    spreadSound.play();
     const interval = setInterval(() => {
       let updatedPositions = [...positions];
       // Tăng dần vị trí của các lá bài từ 3 đến 77
@@ -261,8 +266,12 @@ const getUniqueRandomCardIndex = async () => {
       if (updatedPositions[77] >= 770) {
         clearInterval(interval);
         setIsSpreadCompleted(true);
+        setTimeout(() => {
+          spreadSound.pause();
+          spreadSound.currentTime = 0;
+        }, 300);
       }
-    }, 400); // Điều chỉnh tốc độ animation
+    }, 400);
   };
 
   const generateFinalPrompt = (theme: string) => {

@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Manage.module.css';
 import Product from '../../components/Product/Product';
 import Blog from '../../components/Blog/Blog';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Manage = () => {
+  const navigate = useNavigate();
   const [selectedTag, setSelectedTag] = useState('Sản phẩm');
   const [showPopup, setShowPopup] = useState(false);
   const [products, setProducts] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [productForm, setProductForm] = useState({
     image: '',
     name: '',
@@ -24,12 +27,27 @@ const Manage = () => {
     publishDate: ''
   });
 
+  const handleHomeClick = () => {
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
+
+
   const fetchProducts = async () => {
     try {
       const response = await axios.get('http://localhost:1234/api/products');
       setProducts(response.data);  // Cập nhật danh sách sản phẩm vào state
     } catch (error) {
       console.error('Error fetching products:', error);
+    }
+  };
+
+  const fetchBlogs = async () => {
+    try {
+      const response = await axios.get('http://localhost:1234/api/blogs');
+      setBlogs(response.data);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
     }
   };
 
@@ -48,8 +66,7 @@ const Manage = () => {
   };
 
   const handleClosePopup = () => {
-    setShowPopup(false); // Đóng popup
-    // Reset lại thông tin đã nhập
+    setShowPopup(false);
     if (selectedTag === 'Sản phẩm') {
       setProductForm({
         image: '',
@@ -138,11 +155,23 @@ const Manage = () => {
 
   const handleSubmit = async () => {
     try {
-      // Lấy dữ liệu từ form dựa trên tag đã chọn
-      const data = selectedTag === 'Sản phẩm' ? productForm : blogForm;
+      let data;
+      let apiUrl = '';
 
-      // Xác định đường dẫn API phù hợp dựa trên selectedTag
-      const apiUrl = selectedTag === 'Sản phẩm' ? 'http://localhost:1234/api/products' : 'http://localhost:1234/api/blogs';
+      if (selectedTag === 'Sản phẩm') {
+        data = productForm;
+        apiUrl = 'http://localhost:1234/api/products';
+      }
+      if (selectedTag === 'Bài viết') {
+        const formattedPublishDate = formatDate(blogForm.publishDate);
+        const formattedBlogForm = {
+          ...blogForm,
+          publishDate: formattedPublishDate,
+        };
+
+        data = formattedBlogForm;
+        apiUrl = 'http://localhost:1234/api/blogs';
+      }
 
       // Gửi yêu cầu POST tới backend
       const response = await axios.post(apiUrl, data, {
@@ -152,20 +181,36 @@ const Manage = () => {
       });
 
       console.log('Data uploaded successfully:', response.data);
-      setShowPopup(false); // Đóng popup sau khi thành công
+      setShowPopup(false);
       fetchProducts();
+      fetchBlogs();
     } catch (error) {
       console.error('Error uploading data:', error);
     }
   };
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  // Call the fetch functions and reload data when the component is mounted
+  useEffect(() => {
+    fetchProducts();
+    fetchBlogs();
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.titleManage}>Quản lý dữ liệu</div>
-        <button className={styles.addButton} onClick={handleAddButtonClick}>
-          Thêm mới
-        </button>
+        <div className={styles.buttonGroupTop}>
+          <button className={styles.homeButton} onClick={handleHomeClick}>Trang chủ</button>
+          <button className={styles.addButton} onClick={handleAddButtonClick}>Thêm mới</button>
+        </div>
       </div>
       <div className={styles.footer}>
         <div className={styles.tagsList}>
@@ -190,86 +235,111 @@ const Manage = () => {
             <button className={styles.closePopup} onClick={handleClosePopup}>X</button>
             <h3>{selectedTag === 'Sản phẩm' ? 'Thêm sản phẩm' : 'Thêm bài viết'}</h3>
 
-            {selectedTag === 'Sản phẩm' ? (
-              <>
-                <input
-                  type="file"
-                  name="image"
-                  onChange={handleFileChange}
-                  placeholder="Link ảnh"
-                />
-                <input
-                  type="text"
-                  name="name"
-                  value={productForm.name}
-                  onChange={handleFormChange}
-                  placeholder="Tên sản phẩm"
-                />
-                <input
-                  type="text"
-                  name="nameEn"
-                  value={productForm.nameEn}
-                  onChange={handleFormChange}
-                  placeholder="Tên tiếng anh"
-                />
-                <input
-                  type="text"
-                  name="description"
-                  value={productForm.description}
-                  onChange={handleFormChange}
-                  placeholder="Mô tả sản phẩm"
-                />
-                <input
-                  type="number"
-                  name="price"
-                  value={productForm.price}
-                  onChange={handleFormChange}
-                  placeholder="Giá sản phẩm"
-                />
-                <input
-                  type="number"
-                  name="stock"
-                  value={productForm.stock}
-                  onChange={handleFormChange}
-                  placeholder="Số lượng tồn kho"
-                />
-              </>
-            ) : (
-              <>
-                <input
-                  type="file"
-                  name="image"
-                  onChange={handleFileChange}
-                  placeholder="Link ảnh"
-                />
-                <input
-                  type="text"
-                  name="title"
-                  value={blogForm.title}
-                  onChange={handleFormChange}
-                  placeholder="Tiêu đề"
-                />
-                <input
-                  type="text"
-                  name="shortDescription"
-                  value={blogForm.shortDescription}
-                  onChange={handleFormChange}
-                  placeholder="Mô tả ngắn"
-                />
-                <textarea
-                  name="content"
-                  value={blogForm.content}
-                  onChange={handleTextAreaChange}
-                  placeholder="Nội dung"
-                />
-                <input
-                  type="date"
-                  name="publishDate"
-                  value={blogForm.publishDate}
-                  onChange={handleFormChange}
-                />
-              </>
+            {showPopup && (
+              <div
+                className={`${styles.popup} ${selectedTag === 'Bài viết' ? styles.popupBlogTag : ''}`}
+                onClick={handleOutsideClick}
+              >
+                <div className={`${styles.popupContent} ${selectedTag === 'Bài viết' ? styles.BlogTag : ''}`} onClick={(e) => e.stopPropagation()}>
+                  <button className={styles.closePopup} onClick={handleClosePopup}>X</button>
+                  <h3>{selectedTag === 'Sản phẩm' ? 'Thêm sản phẩm' : 'Thêm bài viết'}</h3>
+
+                  {selectedTag === 'Sản phẩm' ? (
+                    <>
+                      <input
+                        type="file"
+                        name="image"
+                        className={styles.inputPopup}
+                        onChange={handleFileChange}
+                        placeholder="Link ảnh"
+                      />
+                      <input
+                        type="text"
+                        name="name"
+                        className={styles.inputPopup}
+                        value={productForm.name}
+                        onChange={handleFormChange}
+                        placeholder="Tên sản phẩm"
+                      />
+                      <input
+                        type="text"
+                        name="nameEn"
+                        className={styles.inputPopup}
+                        value={productForm.nameEn}
+                        onChange={handleFormChange}
+                        placeholder="Tên tiếng anh"
+                      />
+                      <input
+                        type="text"
+                        name="description"
+                        className={styles.inputPopup}
+                        value={productForm.description}
+                        onChange={handleFormChange}
+                        placeholder="Mô tả sản phẩm"
+                      />
+                      <input
+                        type="number"
+                        name="price"
+                        className={styles.inputPopup}
+                        value={productForm.price}
+                        onChange={handleFormChange}
+                        placeholder="Giá sản phẩm"
+                      />
+                      <input
+                        type="number"
+                        name="stock"
+                        className={styles.inputPopup}
+                        value={productForm.stock}
+                        onChange={handleFormChange}
+                        placeholder="Số lượng tồn kho"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <input
+                        type="file"
+                        name="image"
+                        className={styles.inputPopup}
+                        onChange={handleFileChange}
+                        placeholder="Link ảnh"
+                      />
+                      <input
+                        type="text"
+                        name="title"
+                        className={styles.inputPopup}
+                        value={blogForm.title}
+                        onChange={handleFormChange}
+                        placeholder="Tiêu đề"
+                      />
+                      <input
+                        type="text"
+                        name="shortDescription"
+                        className={styles.inputPopup}
+                        value={blogForm.shortDescription}
+                        onChange={handleFormChange}
+                        placeholder="Mô tả ngắn"
+                      />
+                      <textarea
+                        name="content"
+                        value={blogForm.content}
+                        className={styles.addTextArea}
+                        onChange={handleTextAreaChange}
+                        placeholder="Nội dung"
+                      />
+                      <input
+                        type="date"
+                        name="publishDate"
+                        className={styles.inputPopup}
+                        value={blogForm.publishDate}
+                        onChange={handleFormChange}
+                      />
+                    </>
+                  )}
+                  <button className={styles.submitButton} onClick={handleSubmit}>Đăng</button>
+                </div>
+              </div>
             )}
+
             <button className={styles.submitButton} onClick={handleSubmit}>Đăng</button>
           </div>
         </div>

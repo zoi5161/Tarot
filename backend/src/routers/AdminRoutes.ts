@@ -1,11 +1,9 @@
 import express, { Request, Response } from 'express';
-import { registerAdminController } from '../controllers/AdminController';
-import bcrypt from 'bcryptjs';
-import AdminModel from '../models/AdminModel';
+import { registerAdminController, loginAdminController } from '../controllers/AdminController';
 
 const router = express.Router();
 
 router.post('/register', registerAdminController);
-
+router.post('/login', loginAdminController);
 
 export default router;

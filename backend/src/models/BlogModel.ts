@@ -5,7 +5,7 @@ interface Blog extends Document {
   title: string;
   shortDescription: string;
   content: string;
-  publishDate: Date;
+  publishDate: String;
 }
 
 const blogSchema = new Schema<Blog>({
@@ -13,7 +13,7 @@ const blogSchema = new Schema<Blog>({
   title: { type: String, required: true },
   shortDescription: { type: String, required: true },
   content: { type: String, required: true },
-  publishDate: { type: Date, required: true },
+  publishDate: { type: String, required: true },
 });
 
 const Blog = mongoose.model<Blog>('Blog', blogSchema);

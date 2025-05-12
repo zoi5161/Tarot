@@ -5,50 +5,53 @@ import FloatingParticles from '../../components/FloatingParticles/FloatingPartic
 import styles from './BlogDetail.module.css';
 
 interface Post {
-  id: number;
+  _id: string; // Sử dụng _id thay vì id
   title: string;
   description: string;
   content: string;
-  imageSrc: string;
+  image: string;
   date: string;
 }
 
 const BlogDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // Lấy id từ URL
+  const { id } = useParams<{ id: string }>(); // Lấy _id từ URL (thực tế là _id trong MongoDB)
   const [post, setPost] = useState<Post | null>(null);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch('/posts.txt');
-        const text = await response.text();
-
-        const postsArray: Post[] = text.split('\n').map(line => {
-          const [id, title, description, content, date, imageSrc] = line.split('|');
-          return {
-            id: parseInt(id),
-            title,
-            description,
-            content,
-            date,
-            imageSrc,
-          };
+        // Gọi API để lấy chi tiết bài viết theo ID
+        const response = await fetch(`http://localhost:1234/api/blogs/${id}`);
+        const postData = await response.json();
+        
+        // Cập nhật bài viết
+        setPost({
+          _id: postData._id, // MongoDB trả về _id, không phải id
+          title: postData.title,
+          description: postData.description,
+          content: postData.content,
+          date: postData.publishDate,
+          image: postData.image,
         });
-
-        // Tìm bài viết theo ID
-        const selectedPost = postsArray.find(post => post.id === parseInt(id!));
-        setPost(selectedPost || null);
       } catch (error) {
         console.error('Error fetching post:', error);
       }
     };
 
     fetchPost();
-  }, [id]); // Lấy lại dữ liệu mỗi khi id thay đổi
+  }, [id]);
 
   if (!post) {
     return <div>Loading...</div>;
   }
+
+  // Thay thế \n bằng <br /> trong nội dung bài viết
+  const formattedContent = post.content.split('\n').map((str, index) => (
+    <React.Fragment key={index}>
+      {str}
+      <br />
+    </React.Fragment>
+  ));
 
   return (
     <div className={styles.container}>
@@ -57,9 +60,9 @@ const BlogDetail: React.FC = () => {
       <h1 className={styles.title}>{post.title}</h1>
       <p className={styles.date}>{post.date}</p>
       <div className={styles.content}>
-        <img src={post.imageSrc} alt={post.title} className={styles.image} />
+        <img src={`http://localhost:1234${post.image}`} alt={post.title} className={styles.image} />
         <div className={styles.description}>
-          <p>{post.content}</p>
+          {formattedContent}
         </div>
       </div>
     </div>

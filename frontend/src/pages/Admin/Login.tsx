@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Để sử dụng chức năng điều hướng
 import styles from './Login.module.css';
 
@@ -8,13 +8,41 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(''); // Trạng thái để lưu thông báo lỗi
   const navigate = useNavigate(); // Hàm để điều hướng sang trang khác
 
-  // Hàm xử lý đăng nhập
-  const handleLogin = () => {
-    if (username === 'admin' && password === '123') {
-      setErrorMessage(''); // Xóa thông báo lỗi nếu đăng nhập thành công
-      navigate('/Manage'); // Điều hướng tới trang /Manage nếu username và password đúng
-    } else {
-      setErrorMessage('Sai tài khoản hoặc mật khẩu!'); // Hiển thị thông báo lỗi nếu thông tin sai
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+      navigate('/Manage');
+    }
+  }, [navigate]);
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:1234/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setErrorMessage('');
+        
+        const expiryTime = new Date().getTime() + 60 * 60 * 1000; // Thời gian hết hạn là 1 tiếng (60 phút)
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('expiryTime', expiryTime.toString());
+        
+        
+        window.location.reload();
+      } else {
+        setErrorMessage(data.message || 'Đăng nhập thất bại');
+      }
+    } catch (error) {
+      setErrorMessage('Có lỗi xảy ra khi đăng nhập');
     }
   };
 
@@ -52,18 +80,18 @@ const Login = () => {
           placeholder="Username" 
           value={username} 
           onChange={(e) => setUsername(e.target.value)} 
-          className={styles.input}
+          className={styles.inputLogin}
         />
         <input 
           type="password" 
           placeholder="Password" 
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
-          className={styles.input}
+          className={styles.inputLogin}
         />
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
         <button onClick={handleLogin} className={styles.loginButton}>Đăng nhập</button>
-        <button onClick={handleSignUp} className={styles.loginButton}>Đăng Ký</button>
+        {/* <button onClick={handleSignUp} className={styles.loginButton}>Đăng Ký</button> */}
       </div>
     </div>
   );
