@@ -5,9 +5,9 @@ import Blog from '../../components/Blog/Blog';
 import axios from 'axios';
 
 const Manage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState('Sản phẩm');
   const [showPopup, setShowPopup] = useState(false);
+  const [products, setProducts] = useState([]);
   const [productForm, setProductForm] = useState({
     image: '',
     name: '',
@@ -24,6 +24,21 @@ const Manage = () => {
     publishDate: ''
   });
 
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get('http://localhost:1234/api/products');
+      setProducts(response.data);  // Cập nhật danh sách sản phẩm vào state
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
+  const handleOutsideClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      handleClosePopup();
+    }
+  };
+
   const handleTagClick = (tag: React.SetStateAction<string>) => {
     setSelectedTag(tag);
   };
@@ -33,7 +48,26 @@ const Manage = () => {
   };
 
   const handleClosePopup = () => {
-    setShowPopup(false);
+    setShowPopup(false); // Đóng popup
+    // Reset lại thông tin đã nhập
+    if (selectedTag === 'Sản phẩm') {
+      setProductForm({
+        image: '',
+        name: '',
+        nameEn: '',
+        description: '',
+        price: '',
+        stock: ''
+      });
+    } else {
+      setBlogForm({
+        image: '',
+        title: '',
+        shortDescription: '',
+        content: '',
+        publishDate: ''
+      });
+    }
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,16 +104,27 @@ const Manage = () => {
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (selectedTag === 'Sản phẩm') {
+    
+    // Xử lý đặc biệt cho trường "price"
+    if (name === "price") {
+      // Loại bỏ dấu chấm và chuyển thành số
+      const numericValue = value.replace(/\./g, ''); // Loại bỏ tất cả dấu chấm
       setProductForm((prev) => ({
         ...prev,
-        [name]: value
+        [name]: numericValue // Cập nhật lại giá trị số
       }));
     } else {
-      setBlogForm((prev) => ({
-        ...prev,
-        [name]: value
-      }));
+      if (selectedTag === 'Sản phẩm') {
+        setProductForm((prev) => ({
+          ...prev,
+          [name]: value
+        }));
+      } else {
+        setBlogForm((prev) => ({
+          ...prev,
+          [name]: value
+        }));
+      }
     }
   };
 
@@ -108,7 +153,7 @@ const Manage = () => {
 
       console.log('Data uploaded successfully:', response.data);
       setShowPopup(false); // Đóng popup sau khi thành công
-
+      fetchProducts();
     } catch (error) {
       console.error('Error uploading data:', error);
     }
@@ -117,17 +162,7 @@ const Manage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.search}>
-          <input 
-            type="text" 
-            className={styles.searchInput} 
-            placeholder="Tìm kiếm..." 
-            value={searchQuery}
-          />
-          <button className={styles.searchButton}>
-            <img src="searchIcon.png" alt="" />
-          </button>
-        </div>
+        <div className={styles.titleManage}>Quản lý dữ liệu</div>
         <button className={styles.addButton} onClick={handleAddButtonClick}>
           Thêm mới
         </button>
@@ -150,8 +185,8 @@ const Manage = () => {
 
       {/* Popup Form */}
       {showPopup && (
-        <div className={styles.popup}>
-          <div className={styles.popupContent}>
+        <div className={styles.popup} onClick={handleOutsideClick}>
+          <div className={styles.popupContent} onClick={(e) => e.stopPropagation()}>
             <button className={styles.closePopup} onClick={handleClosePopup}>X</button>
             <h3>{selectedTag === 'Sản phẩm' ? 'Thêm sản phẩm' : 'Thêm bài viết'}</h3>
 

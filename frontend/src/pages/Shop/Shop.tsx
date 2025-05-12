@@ -3,16 +3,18 @@ import emailjs from 'emailjs-com';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Navbar from '../../components/NavBar/Navbar';
 import FloatingParticles from '../../components/FloatingParticles/FloatingParticles';
+import Footer from '../../components/Footer/Footer';
 import styles from './Shop.module.css';
 import axios from 'axios';
 
 interface Product {
   image: string;
-  id: number;
+  _id: number;
   name: string;
   nameEn: string;
   description: string;
   price: number;
+  stock: number;
 }
 
 const Shop: React.FC = () => {
@@ -31,7 +33,6 @@ const Shop: React.FC = () => {
     try {
       const response = await axios.get('http://localhost:1234/api/products');
       setProducts(response.data);  // Dữ liệu trả về từ backend
-      console.log('Products:', response.data);
       setRandomProducts(getRandomProducts(response.data, 3));  // Lấy 3 sản phẩm ngẫu nhiên lần đầu
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -49,7 +50,7 @@ const Shop: React.FC = () => {
   );
 
   const addToCart = (product: Product) => {
-    const existingProductIndex = cart.findIndex(item => item.product.id === product.id);
+    const existingProductIndex = cart.findIndex(item => item.product._id === product._id);
     if (existingProductIndex === -1) {
       setCart([...cart, { product, quantity: 1 }]);
     } else {
@@ -59,8 +60,9 @@ const Shop: React.FC = () => {
     }
   };
 
+
   const decreaseQuantity = (product: Product) => {
-    const existingProductIndex = cart.findIndex(item => item.product.id === product.id);
+    const existingProductIndex = cart.findIndex(item => item.product._id === product._id);
     if (existingProductIndex !== -1) {
       const updatedCart = [...cart];
       if (updatedCart[existingProductIndex].quantity > 1) {
@@ -158,30 +160,36 @@ const Shop: React.FC = () => {
         setPopupTimeout(timeout);
 
         closeModal(); // Đóng modal
+
+        cart.forEach(async (item) => {
+        const updatedStock = item.product.stock - item.quantity;
+
+        // Gửi PUT request để cập nhật số lượng sản phẩm trong DB
+        try {
+          await axios.put(`http://localhost:1234/api/products/${item.product._id}`, {
+            stock: updatedStock,
+          });
+          console.log(`Stock for ${item.product.name} updated to ${updatedStock}`);
+        } catch (error) {
+            console.error(`Error updating stock for ${item.product.name}:`, error);
+          }
+        });
     }).catch((error) => {
         console.error('Có lỗi xảy ra khi gửi email:', error);
     });
   };
 
   const getRandomProducts = (products: any[], number: number) => {
-    // Lấy các sản phẩm ngẫu nhiên
     const shuffled = [...products].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, number);
   };
 
   useEffect(() => {
-    if (products.length > 0) {
-      const randomProds = getRandomProducts(products, 3);
-      setRandomProducts(randomProds);  // Cập nhật random products khi products thay đổi
-    }
-  }, [products]);  // Khi products thay đổi, cập nhật random products
-
-  useEffect(() => {
     const intervalId = setInterval(() => {
-      setRandomProducts(getRandomProducts(products, 3)); // Cập nhật lại randomProducts
-    }, 5000); // 5000 ms = 5s
+      setRandomProducts(getRandomProducts(products, 3));
+    }, 5000);
 
-    return () => clearInterval(intervalId); // Dọn dẹp interval khi component bị hủy
+    return () => clearInterval(intervalId);
   }, [products]);
 
   const scrollToShopCard = () => {
@@ -189,7 +197,6 @@ const Shop: React.FC = () => {
       shopCardRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
 
   useEffect(() => {
     fetchProducts();
@@ -203,7 +210,7 @@ const Shop: React.FC = () => {
         <div className={styles.containerRecommend}>
           <div className={styles.containerRecommend}>
             {randomProducts.map((product) => (
-              <div key={product.id} className={styles.recommendCard}>
+              <div key={product._id} className={styles.recommendCard}>
                 <img 
                   src={`http://localhost:1234${product.image}`} 
                   alt={product.name} 
@@ -219,7 +226,7 @@ const Shop: React.FC = () => {
       </div>
 
       <div className={styles.containerOurInfor} id="ShopCard" ref={shopCardRef}>
-        <FloatingParticles count={200} />
+        <FloatingParticles count={150} />
         <div className={styles.productList}>
           <div className={styles.search}>
             <input 
@@ -227,7 +234,7 @@ const Shop: React.FC = () => {
               className={styles.searchInput} 
               placeholder="Tìm kiếm..." 
               value={searchQuery} 
-              onChange={handleSearchChange}  // Cập nhật giá trị tìm kiếm khi thay đổi
+              onChange={handleSearchChange}
             />
             <button className={styles.searchButton}>
               <img src="searchIcon.png" alt="" />
@@ -235,11 +242,14 @@ const Shop: React.FC = () => {
           </div>
           {filteredProducts.map((product) => (
             <ProductCard
-              key={product.id}
+              key={product._id}
               name={product.name}
-              description={product.nameEn}
+              nameEn={product.nameEn}
+              description={product.description}
               price={product.price}
+              stock={product.stock}
               imageSrc={product.image}
+              quantity={cart.find(item => item.product._id === product._id)?.quantity || 0}
               onAddToCart={() => addToCart(product)}
             />
           ))}
@@ -251,19 +261,28 @@ const Shop: React.FC = () => {
             <img src="/blogTitle.svg" alt="blogTitle" className={styles.blogImage} />
           </div>
           {cart.map((item) => (
-            <div key={item.product.id} className={styles.cartItem}>
-              <img src={item.product.image} alt={item.product.name} className={styles.cartItemImage} />
+            <div key={item.product._id} className={styles.cartItem}> {/* Dùng _id thay vì id */}
+              <img src={`http://localhost:1234${item.product.image}`} alt={item.product.name} className={styles.cartItemImage} />
               <div className={styles.cartItemDetails}>
                 <h3>{item.product.name}</h3>
                 <p>{formatCurrency(item.product.price)}</p>
                 <div className={styles.quantityControls}>
                   <button onClick={() => decreaseQuantity(item.product)}>-</button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => addToCart(item.product)}>+</button>
+                  <button 
+                    onClick={() => addToCart(item.product)} 
+                    disabled={item.quantity >= item.product.stock}
+                  >
+                    +
+                  </button>
                 </div>
+                {item.quantity >= item.product.stock && (
+                  <span className={styles.outOfStock}>Hết hàng</span>
+                )}
               </div>
             </div>
           ))}
+
 
           <div className={styles.cartSummary}>
             <h3 className={styles.totalPrice}>Tổng tiền: {formatCurrency(totalAmount)}</h3>
@@ -273,6 +292,10 @@ const Shop: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      <Footer />
+
+      {/* Modal nhập thông tin cá nhân */}
 
       {showModal && (
         <div className={styles.modal}>
@@ -311,7 +334,7 @@ const Shop: React.FC = () => {
             <p>Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi. Đơn hàng của bạn đã được xác nhận.</p>
             </div>
         </div>
-        )}
+      )}
     </div>
   );
 };

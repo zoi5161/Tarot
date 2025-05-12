@@ -18,6 +18,31 @@ const Login = () => {
     }
   };
 
+  const handleSignUp = async () => {
+    try {
+      const response = await fetch('http://localhost:1234/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert('Đăng ký thành công');
+      } else {
+        setErrorMessage(data.message || 'Đăng ký thất bại');
+      }
+    } catch (error) {
+      setErrorMessage('Có lỗi xảy ra khi đăng ký');
+    }
+  };
+
+
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
@@ -38,6 +63,7 @@ const Login = () => {
         />
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
         <button onClick={handleLogin} className={styles.loginButton}>Đăng nhập</button>
+        <button onClick={handleSignUp} className={styles.loginButton}>Đăng Ký</button>
       </div>
     </div>
   );

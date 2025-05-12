@@ -6,10 +6,10 @@
   width: 250px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -17,10 +17,15 @@
 }
 
 .image {
-  width: 200px;
-  height: auto;
+  width: 230px;
+  height: 250px;
+  object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
+  user-select: none; /* Prevent text selection */
+  -webkit-user-drag: none; /* Prevent image dragging in Webkit browsers (Chrome, Safari) */
+  -moz-user-drag: none; /* Prevent image dragging in Firefox */
+  -ms-user-select: none;
 }
 
 .cardDetails {
@@ -32,9 +37,11 @@
   font-weight: bold;
   color: white;
   margin: 0px 0;
+  text-wrap: wrap;
+  text-align: center;
 }
 
-.productDescription {
+.productNameEn {
   font-size: 14px;
   color: #8f8f8f;
   margin: 10px 0;
@@ -61,4 +68,91 @@
 
 .addToCartButton:hover {
   background-color: #8E24AA;
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: auto;
+}
+
+.popupContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 900px;
+  max-width: 80%;
+  text-align: center;
+  position: relative;
+  display: flex;
+  gap: 40px;
+}
+
+.popupImage {
+  width: 300px;
+  object-fit: cover;
+  border-radius: 25px;
+  border: 3px solid #6A1B9A;
+  user-select: none; /* Prevent text selection */
+  -webkit-user-drag: none; /* Prevent image dragging in Webkit browsers (Chrome, Safari) */
+  -moz-user-drag: none; /* Prevent image dragging in Firefox */
+  -ms-user-select: none;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  z-index: 99;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.popupProductName, .popupProductNameEn, .popupDescription, .popupPrice, .popupStock {
+  margin: 5px 0;
+}
+
+.popupDetails{
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.popupHeader{
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.popupDescriptionContainer{
+  width: 100%;
+  height: 350px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  text-align: justify;
+  text-wrap: wrap;
+  overflow: hidden;
+}
+
+.popupFooter{
+  width: 100%;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
 }

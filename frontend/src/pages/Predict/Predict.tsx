@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './Predict.module.css';
 import Navbar from '../../components/NavBar/Navbar';
 import FloatingParticles from '../../components/FloatingParticles/FloatingParticles';
+import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 
 interface Card {
@@ -39,7 +40,7 @@ const Home = () => {
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [isMeaningButtonClicked, setIsMeaningButtonClicked] = useState(false);
   const [finalPrompt, setFinalPrompt] = useState('Bạn hãy đưa ra ý nghĩa chung khoảng 200-300 chữ cho 3 lá bài tarot tôi vừa bóc được. Tuyệt đối trong ý nghĩa chung không được nhắc đơn lẻ về 3 lá bài. Không cần dấu gạch đầu dòng và cũng không được dùng dấu -. Không cần câu dẫn gì hết, chỉ cần trả lời ý nghĩa chung thôi. Mỗi ý nghĩa cách nhau 1 dấu "-":');
-  const selectedCardIndexes: number[] = [];
+  const [selectedCardIndexes, setSelectedCardIndexes] = useState<number[]>([]);
   const [responseText, setResponseText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const themeDropdownRef = useRef<HTMLDivElement>(null);
@@ -137,30 +138,33 @@ const Home = () => {
     }
   };
 
-  const getUniqueRandomCardIndex = async () => {
-    const cardsData = await fetchCardData();
-    if (!cardsData || cardsData.length === 0) return -1;
+const getUniqueRandomCardIndex = async () => {
+  const cardsData = await fetchCardData();
+  if (!cardsData || cardsData.length === 0) return -1;
 
-    // Tạo một mảng để lưu các chỉ số thẻ đã bị loại (bao gồm cả n và n + 78)
-    let excludedIndexes = [...selectedCardIndexes];
+  // Create an array to store excluded card indexes
+  let excludedIndexes = [...selectedCardIndexes];
 
-    // Thêm vào mảng loại trừ các chỉ số n + 78 đối với các thẻ đã chọn
-    selectedCardIndexes.forEach(index => {
-      if (index + 78 < cardsData.length) {
-        excludedIndexes.push(index + 78);
-      }
-    });
+  // Add excluded indexes n and n+78 for each selected card
+  selectedCardIndexes.forEach(index => {
+    excludedIndexes.push(index);        // Exclude the nth card
+    if (index + 78 < cardsData.length) {
+      excludedIndexes.push(index + 78); // Exclude the nth+78 card
+    }
+  });
 
-    // Tạo số ngẫu nhiên và kiểm tra trùng lặp
-    let randomCardIndex;
-    do {
-      randomCardIndex = Math.floor(Math.random() * cardsData.length); // Tạo số ngẫu nhiên từ 0 đến length
-    } while (excludedIndexes.includes(randomCardIndex)); // Kiểm tra nếu số đã được chọn hoặc bị loại
+  // Generate a random number and check for duplicates
+  let randomCardIndex: number;  // Explicitly define the type of randomCardIndex as 'number'
+  do {
+    randomCardIndex = Math.floor(Math.random() * cardsData.length); // Generate a random number
+  } while (excludedIndexes.includes(randomCardIndex)); // Check if the number is already excluded
 
-    // Lưu số đã chọn vào mảng
-    selectedCardIndexes.push(randomCardIndex);
-    return randomCardIndex; // Trả về index không trùng
-  };
+  // Update the selectedCardIndexes state with the selected index
+  setSelectedCardIndexes(prevIndexes => [...prevIndexes, randomCardIndex]);
+
+  return randomCardIndex; // Return the non-duplicate index
+};
+
 
   const startCardAnimation = () => {
     setAnimationStarted(true);
@@ -413,7 +417,7 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.containerOurInfor}>
-        <FloatingParticles count={200} />
+        <FloatingParticles count={150} />
           {/* Chỉ hiển thị khi cả bộ bài và chủ đề đã được chọn */}
           {selectedTheme !== "CHỌN CHỦ ĐỀ" && (
             <div id="processChosenCard" className={`${styles.processChosenCard} ${showProcessCard ? styles.show : ''}`}>
@@ -514,6 +518,7 @@ const Home = () => {
             </div>
           )}
       </div>
+        <Footer />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import BlogList from '../../components/BlogList/BlogList';
 import Navbar from '../../components/NavBar/Navbar';
 import FloatingParticles from '../../components/FloatingParticles/FloatingParticles';
+import Footer from '../../components/Footer/Footer';
 import styles from './Blog.module.css';
 
 const Blog: React.FC = () => {
@@ -27,21 +28,17 @@ const Blog: React.FC = () => {
           <p className={styles.blogDescription}>
             Dù bạn là người mới bắt đầu hay là một Tarot reader chuyên nghiệp, bạn đều có thể tìm thấy những bài viết hữu ích để phát triển kỹ năng của mình. Hãy cùng khám phá thế giới Tarot qua các bài viết sâu sắc và truyền cảm hứng của chúng tôi!
           </p>
-          <span 
-            className={styles.blogTitle} 
-            onClick={scrollToBlogList} // Thêm sự kiện click để cuộn xuống BlogList
-          >
-            BLOG
-          </span>
+          <span className={styles.blogTitle} onClick={scrollToBlogList}>BLOGS</span>
           <img src="/blogTitle.svg" alt="blogTitle" className={styles.blogImage} />
         </div>
       </div>
       <div className={styles.containerOurInfor}>
-        <FloatingParticles count={200} />
+        <FloatingParticles count={150} />
         {/* Gắn ref vào BlogList */}
         <div className={styles.blogListRef} ref={blogListRef}>
           <BlogList />
         </div>
+        <Footer/>
       </div>
     </div>
   );

@@ -15,12 +15,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 2100px;
+  height: 2400px;
   background-color: #000000;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
   font-family: 'Almendra', serif;
 }

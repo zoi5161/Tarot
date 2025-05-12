@@ -8,7 +8,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 2000px;
+  height: 2500px;
   background-color: #000000;
   overflow: hidden;
   position: relative;
@@ -18,7 +18,7 @@
 .containerWelcome {
   font-family: Arial, sans-serif;
   color: white;
-  height: 800px;
+  height: 900px;
   background-image: url('../../../public/banner1.png');  /* Sử dụng đường dẫn từ thư mục public */
   background-size: cover;
   background-repeat: no-repeat;
@@ -90,7 +90,7 @@
 }
 
 .smallTitle {
-  font-family: 'Almendra', serif;
+  font-family: 'OPPO', serif;
   font-size: 24px;
   font-weight: 400;
   color: white;
@@ -100,9 +100,8 @@
 }
 
 .number{
-  font-size: 30px;
+  font-size: 26px;
   position: relative;
-  top: -2px;
   left: -2px;
 }
 
@@ -126,7 +125,7 @@
 }
 
 .dropdownButton {
-  font-family: 'Almendra', serif;
+  font-family: 'OPPO', serif;
   width: 100%;
   padding: 20px;
   width: 350px;
@@ -203,7 +202,7 @@
 }
 
 .shuffleButton {
-  font-family: 'Almendra', serif;
+  font-family: 'OPPO', serif;
   position: relative;
   display: flex;
   left: 37%;
@@ -226,7 +225,7 @@
 }
 
 .shuffleButton button {
-  font-family: 'Almendra', serif;
+  font-family: 'OPPO', serif;
   font-size: 12px;
   width: 90px;
   height: 90px;
@@ -289,12 +288,13 @@
   text-align: center;
   margin-top: 30px;
   gap: 120px;
+  z-index: 10;
 }
 
 .bigCard{
   display: flex;
   flex-direction: column;
-  font-family: 'Almendra', serif;
+  font-family: 'OPPO', serif;
   gap: 15px;
   background: -webkit-linear-gradient(0deg, #E4C396, #F3E6D4, #F9E0C2);
   -webkit-background-clip: text;
@@ -327,7 +327,7 @@
 }
 
 .inMeaningButton{
-  font-family: 'Almendra', serif;
+  font-family: 'OPPO', serif;
   width: 100%;
   padding: 20px;
   width: 345px;
@@ -374,11 +374,18 @@
 }
 
 .meaningText{
-  font-family: 'Georgia', serif;
+  font-family: 'OPPO', serif;
   margin-top: 10px;
-  width: 100%;
+  width: 95%;
+  height: 80%;
   text-align: justify;
   word-wrap: break-word; 
+  color: black;
+  background: linear-gradient(to right, #E4C396, #F3E6D4, #F9E0C2);
+  border: 1px solid;
+  border-image-slice: 1;
+  border-radius: 20px;
+  padding: 20px;
 }
 
 .loadingMessage{
@@ -393,16 +400,16 @@
 }
 
 .date{
-  font-family: 'Almendra', serif;
-  font-size: 28px;
+  font-family: 'OPPO', serif;
+  font-size: 24px;
   color: white;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   text-align: center;
   user-select: none;
 }
 
 .smallTitleDate{
-  font-family: 'Almendra', serif;
+  font-family: 'OPPO', serif;
   font-size: 24px;
   font-weight: 400;
   color: white;
@@ -412,5 +419,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 8px;
 }
