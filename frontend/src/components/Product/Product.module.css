@@ -18,6 +18,7 @@
 
 .productCard {
   display: flex;
+  justify-content: space-between;
   gap: 50px;
   background-color: white;
   border-radius: 10px;
@@ -73,7 +74,8 @@ h3 {
 
 .rightTable{
   display: flex;
-  width: 15%;
+  min-width: 10%;
+  max-width: 10%;
   height: 100%;
   flex-direction: column;
   justify-content: center;
