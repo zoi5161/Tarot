@@ -18,7 +18,7 @@ const port = process.env.PORT || 4000;
 
 app.use(
     cors({
-        origin: 'http://localhost:5173',  // Cho phép từ địa chỉ này
+        origin: 'https://tarot-web-nqu8.onrender.com',  // Cho phép từ địa chỉ này
         methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Các phương thức HTTP cho phép
         allowedHeaders: ['Content-Type', 'Authorization'],  // Các header cho phép
         credentials: true,  // Nếu bạn muốn sử dụng cookies, credentials cần phải bật

@@ -41,6 +41,8 @@
 
 .logo {
   position: relative;
+  width: 100px;
+  height: 100px;
   /* left: -80px; */
   font-size: 20px;
   font-weight: 100;
@@ -56,18 +58,18 @@
 }
 
 .logoImage {
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: 100%;
   height: auto;
   transition: opacity 0.3s ease;
-  border-radius: 50%;
+  border-radius: 60%;
 }
 
-.logo:hover {
+.logoImage:hover {
   opacity: 0.8;
 }
 
-.logo:hover .logoImage {
+.logoImage:hover {
   opacity: 0.8;
 }
 
