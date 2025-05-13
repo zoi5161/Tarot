@@ -34,8 +34,9 @@ const Shop: React.FC = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/products`);
-      setProducts(response.data);  // Dữ liệu trả về từ backend
-      setRandomProducts(getRandomProducts(response.data, 3));  // Lấy 3 sản phẩm ngẫu nhiên lần đầu
+      console.log('Products fetched:', response.data);
+      setProducts(response.data);
+      setRandomProducts(getRandomProducts(response.data, 3));
     } catch (error) {
       console.error('Error fetching products:', error);
     }

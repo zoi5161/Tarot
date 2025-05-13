@@ -10,7 +10,7 @@ import Manage from './pages/Admin/Manage';
 import AboutUs from './pages/AboutUs/AboutUs';
 
 const App = () => {
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false;
   return (
     <Router>
       <Routes>
