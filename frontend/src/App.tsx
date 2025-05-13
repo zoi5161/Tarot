@@ -22,6 +22,7 @@ const App = () => {
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/Manage" element={isLoggedIn ? <Manage /> : <Navigate to="/Admin" />} />
         <Route path="/Admin" element={isLoggedIn ? <Manage /> : <Login />} />
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </Router>
   );
