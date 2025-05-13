@@ -18,50 +18,62 @@ const AboutUs = () => {
     {
       name: "📚 HIẾU THUẬN",
       role: "Biên tập nội dung & kiểm duyệt kiến thức",
-      avatar: "/members/TranGiaBao.jpg",
+      avatar: "/members/PhamPhanHieuThuan.png",
       content: "Là người đảm bảo mọi nội dung trên website đúng đắn, dễ hiểu và phù hợp với người mới lẫn người thực hành lâu năm. Thuận cũng biên tập tài liệu học tập và ebook cho cộng đồng."
     },
     {
       name: "💫 LINH",
       role: "Founder & Tarot Master",
-      avatar: "/members/TranGiaBao.jpg",
+      avatar: "/members/NguyenTranMyLinh.png",
       content: "\"Tarot là ngôn ngữ của tâm hồn.\" Linh là người sáng lập website, với hơn 8 năm thực hành Tarot, Reiki và chữa lành nội tâm. Chị chuyên về trải bài chuyên sâu (deep reading), khai vấn tâm lý và những chủ đề xoay quanh thức tỉnh tinh thần."
     },
     {
       name: "🔮 QUỲNH ANH",
       role: "Chuyên gia Tarot & Chiêm tinh",
-      avatar: "/members/TranGiaBao.jpg",
+      avatar: "/members/NguyenQuynhAnh.png",
       content: "Với nền tảng chiêm tinh học phương Tây và Tarot cổ điển, Quỳnh Anh giúp khách hàng kết nối giữa lá bài và vòng tròn sao số của họ. Anh đặc biệt giỏi đọc mối quan hệ và chuyển giao năng lượng giữa các chu kỳ cuộc đời."
     },
     {
       name: "🌙 KHA MY",
       role: "Hướng dẫn viên tâm linh & viết nội dung",
-      avatar: "/members/TranGiaBao.jpg",
+      avatar: "/members/NguyenLuuKhaMy.png",
       content: "Kha My là người đứng sau những bài viết sâu sắc trên blog – cô có niềm đam mê bất tận với biểu tượng học, hành trình nữ thần và bóng tối nội tâm (shadow work)."
+    },
+    {
+      name: "🧿 NHẬT HUY",
+      role: "Quản lý cộng đồng & hỗ trợ khách hàng",
+      avatar: "/members/NguyenNhatHuy.png",
+      content: " Là \"linh hồn hậu trường\", Huy đảm bảo bạn sẽ có trải nghiệm dễ chịu và trọn vẹn nhất khi tham gia đặt lịch, xem bài hoặc tìm hiểu kiến thức. Năng lượng của anh ấy cực kỳ nhẹ nhàng và hỗ trợ."
     },
     {
       name: "🌀 HƯƠNG GIANG",
       role: "Mentor Tarot nâng cao & đào tạo học viên",
-      avatar: "/members/TranGiaBao.jpg",
-      content: " Với kinh nghiệm giảng dạy Tarot trong hơn 5 năm, Giang phụ trách các khóa học Tarot từ cơ bản đến chuyên sâu. Phong cách logic – rõ ràng – dễ hiểu nhưng vẫn đầy chiều sâu."
+      avatar: "/members/NguyenNgocHuongGiang.png",
+      content: "Với kinh nghiệm giảng dạy Tarot trong hơn 5 năm, Giang phụ trách các khóa học Tarot từ cơ bản đến chuyên sâu. Phong cách logic – rõ ràng – dễ hiểu nhưng vẫn đầy chiều sâu."
     },
     {
       name: "🌟 MẪN ĐẠT",
       role: "Thiết kế website",
-      avatar: "/members/TranGiaBao.jpg",
+      avatar: "/members/NguyenHoangManDat.png",
       content: "Đăng chuyên tạo ra các trải bài Tarot độc quyền cho từng chủ đề: inner child, self-worth, hành trình nghề nghiệp... Anh cũng là người nghiên cứu biểu tượng học và tâm lý học Jung để ứng dụng vào Tarot."
     },
     {
       name: "🔔 DUY ĐỨC",
       role: "Biên tập nội dung & kiểm duyệt kiến thức",
-      avatar: "/members/TranGiaBao.jpg",
+      avatar: "/members/HaDuyDuc.png",
       content: "Duy Đức tư vấn cho khách hàng về tinh thể phù hợp sau khi xem bài. Anh có kiến thức về chakra, đá năng lượng và các phương pháp cân bằng tần số cá nhân sau quá trình 6 năm làm việc trong ngành đá tự nhiên."
     },
     {
       name: "🧘 GIA VINH",
       role: "Hướng dẫn thiền và làm việc với trực giác",
-      avatar: "/members/TranGiaBao.jpg",
+      avatar: "/members/NguyenTruongGiaVinh.png",
       content: "Gia Vinh hỗ trợ người xem bài kết nối tốt hơn với năng lượng bên trong thông qua thiền định, hơi thở và journaling. Đặc biệt phù hợp với những ai đang cần an yên và định tâm."
+    },
+      {
+      name: "🎨 UYỂN NHI",
+      role: "Chuyên viên mỹ thuật",
+      avatar: "/members/TrinhNuUyenNhi.png",
+      content: "Là \"phù thuỷ\" phù phép cho mọi hình ảnh xuất hiện trên website trở nên đẹp và lung linh. Nhi chính là người đem đến diện mạo của website Tarocitopia"
     },
   ];
 

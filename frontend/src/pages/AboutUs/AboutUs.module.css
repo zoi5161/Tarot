@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 2700px;
+  height: 2900px;
   background-color: #000000;
   background-size: contain;
   background-repeat: no-repeat;
@@ -25,7 +25,7 @@
 
 .containerOurInfor{
   display: flex;
-  height: 2000px;
+  height: 2200px;
   width: 100%;
   flex-wrap: wrap;
 }
@@ -109,6 +109,7 @@
 .avatar{
   width: 270px;
   height: 270px;
+  object-fit: cover;
   border-radius: 50%;
   user-select: none;
   -webkit-user-drag: none;
