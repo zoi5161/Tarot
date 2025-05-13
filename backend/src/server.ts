@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import ChatRoutes from '../src/routers/ChatRoutes';
+import ChatRoutes from './routers/chatRoutes';
 import ProductRoutes from './routers/ProductRoutes';
 import BlogRoutes from './routers/BlogRoutes';
 import ImageRoutes from './routers/ImageRoutes';
