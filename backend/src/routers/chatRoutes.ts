@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';  // Đảm bảo import đúng các kiểu
-import { getGeminiResponse } from '../controllers/ChatController';
+import { getGeminiResponse } from '../controllers/chatController';
 
 const router = Router();
 
