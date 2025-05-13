@@ -9,6 +9,7 @@ import BlogRoutes from './routers/BlogRoutes';
 import ImageRoutes from './routers/ImageRoutes';
 import cookieParser from 'cookie-parser';
 import AdminRoutes from './routers/AdminRoutes';
+import OrderRoutes from './routers/OrderRoutes';
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use('/api', ProductRoutes);
 app.use('/api', BlogRoutes);
 app.use('/api', ImageRoutes);
 app.use('/api', AdminRoutes);
+app.use('/api', OrderRoutes);
 
 const connectDB = async () => {
   try {

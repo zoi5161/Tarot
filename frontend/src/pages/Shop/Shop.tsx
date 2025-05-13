@@ -89,94 +89,115 @@ const Shop: React.FC = () => {
     setShowModal(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
-
     const name_custom = (form.name as unknown as HTMLInputElement).value;
     const phone = form.phone.value;
     const email = form.email.value;
     const address = form.address.value;
 
+    // Kiểm tra tính hợp lệ của số điện thoại và email
     if (!phoneRegex.test(phone)) {
-        alert('Số điện thoại không hợp lệ. Vui lòng nhập lại.');
-        return;
+      alert('Số điện thoại không hợp lệ. Vui lòng nhập lại.');
+      return;
     }
 
     if (!emailRegex.test(email)) {
-        alert('Email không hợp lệ. Vui lòng nhập lại.');
-        return;
+      alert('Email không hợp lệ. Vui lòng nhập lại.');
+      return;
     }
 
-    // Tính toán giá trị tổng tiền từ giỏ hàng
+    // Tính toán tổng tiền từ giỏ hàng
     const totalAmount = cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
 
     // Khai báo các giá trị cost
     let cost = {
-        shipping: 50000,  // Phí vận chuyển
-        tax: 5000,  // Thuế
-        total: totalAmount,  // Tổng số tiền giỏ hàng
+      shipping: 50000,  // Phí vận chuyển
+      tax: 5000,  // Thuế
+      total: totalAmount,  // Tổng số tiền giỏ hàng
     };
 
-  const grandTotal = cost.total + cost.shipping + cost.tax;
+    const grandTotal = cost.total + cost.shipping + cost.tax;
 
-  // Gửi email qua EmailJS với các giá trị thay thế vào template
-  emailjs.send(
-      process.env.REACT_APP_EMAILJS_SERVICE_ID as string, // Service ID từ biến môi trường
-      process.env.REACT_APP_EMAILJS_TEMPLATE_ID as string, // Template ID từ biến môi trường
-      {
-      to_email: email, // Email người nhận
-      link_logo: 'https://yourdomain.com/logo.png', // Đường dẫn logo
-      order_id: 'ID0012', // Mã đơn hàng
-      name_custom: name_custom, // Tên khách hàng
-      phone: phone, // Số điện thoại
-      address: address, // Địa chỉ
-      orders: cart.map(item => ({
-          link_image: item.product.image,
-          name_order: item.product.name,
-          units: item.quantity,
-          price: formatCurrency(item.product.price),
-      })),
-      cost: {
-        shipping: formatCurrency(cost.shipping),  // Format giá trị phí vận chuyển
-        tax: formatCurrency(cost.tax),  // Format giá trị thuế
-        total: formatCurrency(cost.total),  // Format tổng số tiền giỏ hàng
-      },
-      grandTotal: formatCurrency(grandTotal),  // Truyền giá trị cost vào
-      email: email, // Email khách hàng
-      },
-      process.env.REACT_APP_EMAILJS_USER_ID as string  // User ID từ biến môi trường
-    ).then(() => {
-        // Sau khi thanh toán thành công, xóa giỏ hàng và hiển thị popup thông báo
-        setCart([]); // Xóa giỏ hàng
-        setShowSuccessPopup(true); // Hiển thị popup
+    // Tạo đơn hàng trong cơ sở dữ liệu
+    try {
+      const orderData = {
+        name_custom,
+        phone,
+        email,
+        address,
+        orders: cart.map(item => ({
+          productId: item.product._id,  // Sử dụng _id của sản phẩm
+          quantity: item.quantity,
+        })),
+      };
 
-        // Thiết lập timeout để tự động tắt popup sau 10 giây
-        if (popupTimeout) clearTimeout(popupTimeout); // Hủy timeout cũ nếu có
-        const timeout = setTimeout(() => {
-        setShowSuccessPopup(false); // Ẩn popup sau 10 giây
-        }, 10000);
-        setPopupTimeout(timeout);
+      // Gửi yêu cầu tới backend để tạo đơn hàng
+      const response = await axios.post('http://localhost:1234/api/orders', orderData);
 
-        closeModal(); // Đóng modal
+      if (response.data.success) {
+        // Sau khi tạo đơn hàng thành công, gửi email xác nhận
+        emailjs.send(
+          process.env.REACT_APP_EMAILJS_SERVICE_ID as string, // Service ID từ biến môi trường
+          process.env.REACT_APP_EMAILJS_TEMPLATE_ID as string, // Template ID từ biến môi trường
+          {
+            to_email: email,
+            link_logo: 'https://yourdomain.com/logo.png',
+            order_id: response.data.order._id, // Mã đơn hàng từ database
+            name_custom: name_custom, // Tên khách hàng
+            phone: phone, // Số điện thoại
+            address: address, // Địa chỉ
+            orders: cart.map(item => ({
+              link_image: item.product.image,
+              name_order: item.product.name,
+              units: item.quantity,
+              price: formatCurrency(item.product.price),
+            })),
+            cost: {
+              shipping: formatCurrency(cost.shipping),
+              tax: formatCurrency(cost.tax),
+              total: formatCurrency(cost.total),
+            },
+            grandTotal: formatCurrency(grandTotal),
+            email: email,
+          },
+          process.env.REACT_APP_EMAILJS_USER_ID as string // User ID từ biến môi trường
+        ).then(() => {
+          // Sau khi gửi email thành công, thực hiện các thao tác như xóa giỏ hàng và cập nhật sản phẩm
+          setCart([]);
+          setShowSuccessPopup(true);
 
-        cart.forEach(async (item) => {
-        const updatedStock = item.product.stock - item.quantity;
+          if (popupTimeout) clearTimeout(popupTimeout);
+          const timeout = setTimeout(() => {
+            setShowSuccessPopup(false);
+          }, 10000);
+          setPopupTimeout(timeout);
 
-        // Gửi PUT request để cập nhật số lượng sản phẩm trong DB
-        try {
-          await axios.put(`http://localhost:1234/api/products/${item.product._id}`, {
-            stock: updatedStock,
+          closeModal();
+
+          // Cập nhật số lượng sản phẩm trong cơ sở dữ liệu
+          cart.forEach(async (item) => {
+            const updatedStock = item.product.stock - item.quantity;
+
+            // Gửi PUT request để cập nhật số lượng sản phẩm trong DB
+            try {
+              await axios.put(`http://localhost:1234/api/products/${item.product._id}`, {
+                stock: updatedStock,
+              });
+              console.log(`Stock for ${item.product.name} updated to ${updatedStock}`);
+            } catch (error) {
+              console.error(`Error updating stock for ${item.product.name}:`, error);
+            }
           });
-          console.log(`Stock for ${item.product.name} updated to ${updatedStock}`);
-        } catch (error) {
-            console.error(`Error updating stock for ${item.product.name}:`, error);
-          }
+        }).catch((error) => {
+          console.error('Có lỗi xảy ra khi gửi email:', error);
         });
-    }).catch((error) => {
-        console.error('Có lỗi xảy ra khi gửi email:', error);
-    });
+      }
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
   };
 
   const getRandomProducts = (products: any[], number: number) => {

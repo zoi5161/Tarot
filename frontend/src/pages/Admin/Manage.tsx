@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Manage.module.css';
 import Product from '../../components/Product/Product';
 import Blog from '../../components/Blog/Blog';
+import Order from '../../components/Order/Order';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +12,7 @@ const Manage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [products, setProducts] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [productForm, setProductForm] = useState({
     image: '',
     name: '',
@@ -26,12 +28,21 @@ const Manage = () => {
     content: '',
     publishDate: ''
   });
+  const [orderForm, setOrderForm] = useState({
+    customerName: '',
+    phone: '',
+    email: '',
+    address: '',
+    products: [] as { productId: string, quantity: number }[], // Mảng sản phẩm trong đơn hàng
+    status: false, // Trạng thái đơn hàng, mặc định là chưa giao
+    createdAt: new Date().toISOString(), // Thêm trường createdAt, mặc định là thời điểm hiện tại
+  });
+
 
   const handleHomeClick = () => {
     navigate('/');
     window.scrollTo(0, 0);
   };
-
 
   const fetchProducts = async () => {
     try {
@@ -48,6 +59,15 @@ const Manage = () => {
       setBlogs(response.data);
     } catch (error) {
       console.error('Error fetching blogs:', error);
+    }
+  };
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get('http://localhost:1234/api/orders');
+      setOrders(response.data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
     }
   };
 
@@ -136,6 +156,11 @@ const Manage = () => {
           ...prev,
           [name]: value
         }));
+      } else if (selectedTag === 'Đơn hàng') {
+        setOrderForm((prev) => ({
+          ...prev,
+          [name]: value
+        }));
       } else {
         setBlogForm((prev) => ({
           ...prev,
@@ -161,8 +186,7 @@ const Manage = () => {
       if (selectedTag === 'Sản phẩm') {
         data = productForm;
         apiUrl = 'http://localhost:1234/api/products';
-      }
-      if (selectedTag === 'Bài viết') {
+      } else if (selectedTag === 'Bài viết') {
         const formattedPublishDate = formatDate(blogForm.publishDate);
         const formattedBlogForm = {
           ...blogForm,
@@ -171,6 +195,9 @@ const Manage = () => {
 
         data = formattedBlogForm;
         apiUrl = 'http://localhost:1234/api/blogs';
+      } else if (selectedTag === 'Đơn hàng') {
+        data = orderForm;
+        apiUrl = 'http://localhost:1234/api/orders';
       }
 
       // Gửi yêu cầu POST tới backend
@@ -184,6 +211,7 @@ const Manage = () => {
       setShowPopup(false);
       fetchProducts();
       fetchBlogs();
+      fetchOrders();
     } catch (error) {
       console.error('Error uploading data:', error);
     }
@@ -197,10 +225,10 @@ const Manage = () => {
     return `${day}-${month}-${year}`;
   };
 
-  // Call the fetch functions and reload data when the component is mounted
   useEffect(() => {
     fetchProducts();
     fetchBlogs();
+    fetchOrders();
   }, []);
 
   return (
@@ -209,7 +237,7 @@ const Manage = () => {
         <div className={styles.titleManage}>Quản lý dữ liệu</div>
         <div className={styles.buttonGroupTop}>
           <button className={styles.homeButton} onClick={handleHomeClick}>Trang chủ</button>
-          <button className={styles.addButton} onClick={handleAddButtonClick}>Thêm mới</button>
+          <button className={styles.addButton} onClick={handleAddButtonClick} style={{ display: selectedTag === 'Đơn hàng' ? 'none' : 'inline-block' }}>Thêm mới</button>
         </div>
       </div>
       <div className={styles.footer}>
@@ -220,11 +248,15 @@ const Manage = () => {
           <div className={`${styles.tags} ${selectedTag === 'Bài viết' ? styles.selectedTag : ''}`} onClick={() => handleTagClick('Bài viết')}>
             Bài viết
           </div>
+          <div className={`${styles.tags} ${selectedTag === 'Đơn hàng' ? styles.selectedTag : ''}`} onClick={() => handleTagClick('Đơn hàng')}>
+            Đơn hàng
+          </div>
         </div>
 
         <div className={styles.table}>
           {selectedTag === 'Sản phẩm' && <Product />}
           {selectedTag === 'Bài viết' && <Blog />}
+          {selectedTag === 'Đơn hàng' && <Order />}
         </div>
       </div>
 

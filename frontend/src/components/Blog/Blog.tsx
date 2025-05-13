@@ -35,7 +35,8 @@ const Blog = () => {
     const lowerSearchQuery = searchQuery.toLowerCase();
     return (
       blogs.title.toLowerCase().includes(lowerSearchQuery) ||
-      blogs.shortDescription.toLowerCase().includes(lowerSearchQuery)
+      blogs.shortDescription.toLowerCase().includes(lowerSearchQuery) ||
+      blogs.publishDate.toLowerCase().includes(lowerSearchQuery)
     );
   });
 
@@ -195,7 +196,7 @@ const Blog = () => {
             <div className={styles.popup} onClick={handleOutsideClick}>
               <div className={styles.popupContent} onClick={(e) => e.stopPropagation()}>
                 <button className={styles.closePopup} onClick={handleClosePopup}>X</button>
-                <h3>Chỉnh sửa sản phẩm</h3>
+                <div className={styles.editPopup}>Chỉnh sửa bài viết</div>
                 <div className={styles.productImageContainer}>
                   <input
                     type="file"
@@ -246,7 +247,7 @@ const Blog = () => {
           {showDeleteConfirmation && (
             <div className={styles.popup} onClick={handleOutsideDeleteClick}>
               <div className={styles.popupContent} onClick={(e) => e.stopPropagation()}>
-                <h3>Bạn có chắc muốn xóa sản phẩm này?</h3>
+                <div className={styles.askDel}>Bạn có chắc muốn xóa bài viết này?</div>
                 <div className={styles.buttonGroup}>
                   <button className={styles.confirmButton} onClick={handleConfirmDelete}>Xoá</button>
                   <button className={styles.cancelButton} onClick={handleCancelDelete}>Hủy</button>
