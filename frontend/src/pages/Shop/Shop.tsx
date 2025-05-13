@@ -7,6 +7,8 @@ import Footer from '../../components/Footer/Footer';
 import styles from './Shop.module.css';
 import axios from 'axios';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 interface Product {
   image: string;
   _id: number;
@@ -31,7 +33,7 @@ const Shop: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:1234/api/products');
+      const response = await axios.get(`${backendUrl}/api/products`);
       setProducts(response.data);  // Dữ liệu trả về từ backend
       setRandomProducts(getRandomProducts(response.data, 3));  // Lấy 3 sản phẩm ngẫu nhiên lần đầu
     } catch (error) {
@@ -135,7 +137,7 @@ const Shop: React.FC = () => {
       };
 
       // Gửi yêu cầu tới backend để tạo đơn hàng
-      const response = await axios.post('http://localhost:1234/api/orders', orderData);
+      const response = await axios.post(`${backendUrl}/api/orders`, orderData);
 
       if (response.data.success) {
         // Sau khi tạo đơn hàng thành công, gửi email xác nhận
@@ -183,7 +185,7 @@ const Shop: React.FC = () => {
 
             // Gửi PUT request để cập nhật số lượng sản phẩm trong DB
             try {
-              await axios.put(`http://localhost:1234/api/products/${item.product._id}`, {
+              await axios.put(`${backendUrl}/api/products/${item.product._id}`, {
                 stock: updatedStock,
               });
               console.log(`Stock for ${item.product.name} updated to ${updatedStock}`);
@@ -233,7 +235,7 @@ const Shop: React.FC = () => {
             {randomProducts.map((product) => (
               <div key={product._id} className={styles.recommendCard}>
                 <img 
-                  src={`http://localhost:1234${product.image}`} 
+                  src={`${backendUrl}${product.image}`} 
                   alt={product.name} 
                   className={styles.imageRecommendCard} 
                 />
@@ -285,7 +287,7 @@ const Shop: React.FC = () => {
           </div>
           {cart.map((item) => (
             <div key={item.product._id} className={styles.cartItem}> {/* Dùng _id thay vì id */}
-              <img src={`http://localhost:1234${item.product.image}`} alt={item.product.name} className={styles.cartItemImage} />
+              <img src={`${backendUrl}${item.product.image}`} alt={item.product.name} className={styles.cartItemImage} />
               <div className={styles.cartItemDetails}>
                 <h3>{item.product.name}</h3>
                 <p>{formatCurrency(item.product.price)}</p>

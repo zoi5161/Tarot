@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Order.module.css';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const Order = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [orders, setOrders] = useState<any[]>([]);
@@ -27,7 +29,7 @@ const Order = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:1234/api/orders');
+      const response = await axios.get(`${backendUrl}/api/orders`);
       
       // Kiểm tra xem response.data.orders có phải là mảng không
       if (Array.isArray(response.data.orders)) {
@@ -82,7 +84,7 @@ const Order = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:1234/api/orders/${selectedOrder._id}`);
+      const response = await axios.delete(`${backendUrl}/api/orders/${selectedOrder._id}`);
       console.log('Order deleted:', response.data);
       setShowDeleteConfirmation(false);
       fetchOrders();
@@ -97,7 +99,7 @@ const Order = () => {
 
   const handleStatusChange = async (orderId: string) => {
     try {
-      const response = await axios.put('http://localhost:1234/api/orders/status', {
+      const response = await axios.put(`${backendUrl}/api/orders/status`, {
         orderId,
         status: true,
       });
@@ -191,7 +193,7 @@ const Order = () => {
                         {/* Hiển thị ảnh sản phẩm */}
                         <div className={styles.productImageContainer}>
                         <img
-                            src={`http://localhost:1234${product.productId?.image}`} // Giả sử bạn có URL ảnh từ product.productId
+                            src={`${backendUrl}${product.productId?.image}`} // Giả sử bạn có URL ảnh từ product.productId
                             alt={product.productId?.name} // Hiển thị tên sản phẩm
                             className={styles.productImage}
                         />

@@ -12,6 +12,8 @@ interface Post {
   date: string;
 }
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const BlogList: React.FC = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
@@ -25,7 +27,7 @@ useEffect(() => {
   const fetchPosts = async () => {
     try {
       // Gọi API để lấy dữ liệu blog từ database
-      const response = await fetch('http://localhost:1234/api/blogs'); // Đảm bảo rằng URL API chính xác
+      const response = await fetch(`${backendUrl}/api/blogs`); // Đảm bảo rằng URL API chính xác
       const data = await response.json(); // Dữ liệu nhận được từ API
 
       // Cập nhật các post từ dữ liệu API
@@ -81,7 +83,7 @@ useEffect(() => {
               title={post.title}
               shortDescription={post.shortDescription}
               content={post.content}
-              src={`http://localhost:1234${post.image}`}
+              src={`${backendUrl}${post.image}`}
               date={post.date}
               onClick={() => handleCardClick(post._id)}
             />

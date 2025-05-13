@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Blog.module.css';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [blogs, setBlogs] = useState<any[]>([]);
@@ -21,7 +23,7 @@ const Blog = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get('http://localhost:1234/api/blogs');
+      const response = await axios.get(`${backendUrl}/api/blogs`);
       setBlogs(response.data);
       setLoading(false);
     } catch (error) {
@@ -70,7 +72,7 @@ const Blog = () => {
       formData.append('image', file);
 
       try {
-        const response = await axios.post('http://localhost:1234/api/upload-image', formData, {
+        const response = await axios.post(`${backendUrl}/api/upload-image`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -95,7 +97,7 @@ const Blog = () => {
       const updatedBlog = { ...selectedBlog, image: image };
 
       // Gửi yêu cầu PUT để cập nhật sản phẩm
-      const response = await axios.put(`http://localhost:1234/api/blogs/${selectedBlog._id}`, updatedBlog);
+      const response = await axios.put(`${backendUrl}/api/blogs/${selectedBlog._id}`, updatedBlog);
       console.log('Blog updated:', response.data);
 
       // Đóng popup sau khi cập nhật thành công
@@ -115,7 +117,7 @@ const Blog = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:1234/api/blogs/${selectedBlog._id}`);
+      const response = await axios.delete(`${backendUrl}/api/blogs/${selectedBlog._id}`);
       console.log('Blog deleted:', response.data);
       setShowDeleteConfirmation(false);
       fetchBlogs();
@@ -170,7 +172,7 @@ const Blog = () => {
             <div key={blog._id} className={styles.productCard}>  {/* Sử dụng _id của MongoDB để làm key */}
               <div className={styles.leftTable}>
                 <img
-                  src={`http://localhost:1234${blog.image}`}
+                  src={`${backendUrl}${blog.image}`}
                   alt={blog.name}
                   className={styles.productImage}
                 />
@@ -204,7 +206,7 @@ const Blog = () => {
                     onChange={handleImageChange}
                   />
                   <img
-                    src={image ? `http://localhost:1234${image}` : ''}
+                    src={image ? `${backendUrl}${image}` : ''}
                     alt="Product"
                     className={styles.productImageSmall}
                     style={{ width: '100px', height: '100px', marginTop: '10px' }}

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Để sử dụng chức năng điều hướng
 import styles from './Login.module.css';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +19,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://localhost:1234/api/login', {
+      const response = await fetch(`${backendUrl}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +50,7 @@ const Login = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await fetch('http://localhost:1234/api/register', {
+      const response = await fetch(`${backendUrl}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -6,6 +6,8 @@ import Order from '../../components/Order/Order';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const Manage = () => {
   const navigate = useNavigate();
   const [selectedTag, setSelectedTag] = useState('Sản phẩm');
@@ -46,7 +48,7 @@ const Manage = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:1234/api/products');
+      const response = await axios.get(`${backendUrl}/api/products`);
       setProducts(response.data);  // Cập nhật danh sách sản phẩm vào state
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -55,7 +57,7 @@ const Manage = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get('http://localhost:1234/api/blogs');
+      const response = await axios.get(`${backendUrl}/api/blogs`);
       setBlogs(response.data);
     } catch (error) {
       console.error('Error fetching blogs:', error);
@@ -64,7 +66,7 @@ const Manage = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:1234/api/orders');
+      const response = await axios.get(`${backendUrl}/api/orders`);
       setOrders(response.data);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -114,7 +116,7 @@ const Manage = () => {
       formData.append('image', files[0]);
 
       try {
-        const response = await axios.post('http://localhost:1234/api/upload-image', formData, {
+        const response = await axios.post(`${backendUrl}/api/upload-image`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -185,7 +187,7 @@ const Manage = () => {
 
       if (selectedTag === 'Sản phẩm') {
         data = productForm;
-        apiUrl = 'http://localhost:1234/api/products';
+        apiUrl = `${backendUrl}/api/products`;
       } else if (selectedTag === 'Bài viết') {
         const formattedPublishDate = formatDate(blogForm.publishDate);
         const formattedBlogForm = {
@@ -194,10 +196,10 @@ const Manage = () => {
         };
 
         data = formattedBlogForm;
-        apiUrl = 'http://localhost:1234/api/blogs';
+        apiUrl = `${backendUrl}/api/blogs`;
       } else if (selectedTag === 'Đơn hàng') {
         data = orderForm;
-        apiUrl = 'http://localhost:1234/api/orders';
+        apiUrl = `${backendUrl}/api/orders`;
       }
 
       // Gửi yêu cầu POST tới backend

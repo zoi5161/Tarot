@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Product.module.css';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const Product = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState<any[]>([]);  // Khai báo state để lưu danh sách sản phẩm
@@ -14,7 +16,7 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:1234/api/products');
+      const response = await axios.get(`${backendUrl}/api/products`);
       setProducts(response.data);
       setLoading(false);
     } catch (error) {
@@ -67,7 +69,7 @@ const Product = () => {
       formData.append('image', file);
 
       try {
-        const response = await axios.post('http://localhost:1234/api/upload-image', formData, {
+        const response = await axios.post(`${backendUrl}/api/upload-image`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -93,7 +95,7 @@ const Product = () => {
       const updatedProduct = { ...selectedProduct, image: image };  // Cập nhật thông tin sản phẩm với ảnh mới
 
       // Gửi yêu cầu PUT để cập nhật sản phẩm
-      const response = await axios.put(`http://localhost:1234/api/products/${selectedProduct._id}`, updatedProduct);
+      const response = await axios.put(`${backendUrl}/api/products/${selectedProduct._id}`, updatedProduct);
       console.log('Product updated:', response.data);
 
       // Đóng popup sau khi cập nhật thành công
@@ -113,7 +115,7 @@ const Product = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:1234/api/products/${selectedProduct._id}`);
+      const response = await axios.delete(`${backendUrl}/api/products/${selectedProduct._id}`);
       console.log('Product deleted:', response.data);
       setShowDeleteConfirmation(false);  // Đóng popup xác nhận xóa
       fetchProducts();  // Tải lại danh sách sản phẩm
@@ -158,7 +160,7 @@ const Product = () => {
             <div key={product._id} className={styles.productCard}>  {/* Sử dụng _id của MongoDB để làm key */}
               <div className={styles.leftTable}>
                 <img
-                  src={`http://localhost:1234${product.image}`}
+                  src={`${backendUrl}${product.image}`}
                   alt={product.name}
                   className={styles.productImage}
                 />
@@ -193,7 +195,7 @@ const Product = () => {
                     onChange={handleImageChange}
                   />
                   <img
-                    src={image ? `http://localhost:1234${image}` : ''}
+                    src={image ? `${backendUrl}${image}` : ''}
                     alt="Product"
                     className={styles.productImageSmall}
                     style={{ width: '100px', height: '100px', marginTop: '10px' }}

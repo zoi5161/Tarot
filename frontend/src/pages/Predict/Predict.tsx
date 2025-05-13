@@ -5,6 +5,8 @@ import FloatingParticles from '../../components/FloatingParticles/FloatingPartic
 import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 interface Card {
   src: string;
   DescriptionFamily: string;
@@ -313,7 +315,7 @@ const Home = () => {
 
       try {
         // Gửi finalPrompt đến API backend
-        const response = await axios.post('http://localhost:1234/api/ask-gemini', {
+        const response = await axios.post(`${backendUrl}/api/ask-gemini`, {
           prompt: finalPrompt,
         });
 

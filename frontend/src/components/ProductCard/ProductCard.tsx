@@ -12,6 +12,8 @@ interface ProductCardProps {
   onAddToCart: () => void;
 }
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const ProductCard: React.FC<ProductCardProps> = ({ name, nameEn, description, price, imageSrc, stock, quantity, onAddToCart }) => {
   const [showPopup, setShowPopup] = useState(false); // State to control the popup visibility
 
@@ -42,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, nameEn, description, pr
 
   return (
     <div className={styles.card} onClick={openPopup}> {/* Open popup when clicking on the card */}
-      <img src={`http://localhost:1234${imageSrc}`} alt={name} className={styles.image} />
+      <img src={`${backendUrl}${imageSrc}`} alt={name} className={styles.image} />
       <div className={styles.cardDetails}>
         <h3 className={styles.productName}>{name}</h3>
         <p className={styles.productNameEn}>{nameEn}</p>
@@ -62,7 +64,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, nameEn, description, pr
         <div className={styles.popupOverlay} onClick={handleOverlayClick}>
           <div className={styles.popupContent} onClick={(e) => e.stopPropagation()}>
             <button className={styles.closeButton} onClick={closePopup}>X</button>
-            <img src={`http://localhost:1234${imageSrc}`} alt={name} className={styles.popupImage} />
+            <img src={`${backendUrl}${imageSrc}`} alt={name} className={styles.popupImage} />
             <div className={styles.popupDetails}>
               <div className={styles.popupHeader}>
                 <h3 className={styles.popupProductName}>{name}</h3>

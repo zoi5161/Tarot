@@ -13,6 +13,8 @@ interface Post {
   date: string;
 }
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const BlogDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Lấy _id từ URL (thực tế là _id trong MongoDB)
   const [post, setPost] = useState<Post | null>(null);
@@ -21,7 +23,7 @@ const BlogDetail: React.FC = () => {
     const fetchPost = async () => {
       try {
         // Gọi API để lấy chi tiết bài viết theo ID
-        const response = await fetch(`http://localhost:1234/api/blogs/${id}`);
+        const response = await fetch(`${backendUrl}/api/blogs/${id}`);
         const postData = await response.json();
         
         // Cập nhật bài viết
@@ -60,7 +62,7 @@ const BlogDetail: React.FC = () => {
       <h1 className={styles.title}>{post.title}</h1>
       <p className={styles.date}>{post.date}</p>
       <div className={styles.content}>
-        <img src={`http://localhost:1234${post.image}`} alt={post.title} className={styles.image} />
+        <img src={`${backendUrl}${post.image}`} alt={post.title} className={styles.image} />
         <div className={styles.description}>
           {formattedContent}
         </div>
