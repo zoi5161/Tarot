@@ -14,7 +14,7 @@ import OrderRoutes from './routers/OrderRoutes';
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT_BACKEND || 1234;  
+const port = process.env.PORT || 4000;
 
 app.use(
     cors({
