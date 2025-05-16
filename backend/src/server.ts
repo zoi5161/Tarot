@@ -14,11 +14,11 @@ import OrderRoutes from './routers/OrderRoutes';
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 1234;
 
 app.use(
     cors({
-        origin: 'https://tarot-web-nqu8.onrender.com',  // Cho phép từ địa chỉ này
+        origin: process.env.CLIENT_URL,  // Cho phép từ địa chỉ này
         methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Các phương thức HTTP cho phép
         allowedHeaders: ['Content-Type', 'Authorization'],  // Các header cho phép
         credentials: true,  // Nếu bạn muốn sử dụng cookies, credentials cần phải bật

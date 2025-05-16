@@ -250,7 +250,12 @@
 }
 
 .imageJump{
-  width: 300px;
+  width: 350px;
+  transition: filter 0.5s ease;
+}
+
+.imageJump:hover {
+  filter: brightness(1.2);
 }
 
 .imageJump {

@@ -112,6 +112,15 @@ const Shop: React.FC = () => {
       return;
     }
 
+    closeModal();
+    setShowSuccessPopup(true);
+
+    if (popupTimeout) clearTimeout(popupTimeout);
+    const timeout = setTimeout(() => {
+      setShowSuccessPopup(false);
+    }, 10000);
+    setPopupTimeout(timeout);
+
     // Tính toán tổng tiền từ giỏ hàng
     const totalAmount = cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
 
@@ -153,8 +162,9 @@ const Shop: React.FC = () => {
             phone: phone, // Số điện thoại
             address: address, // Địa chỉ
             orders: cart.map(item => ({
-              link_image: item.product.image,
+              // link_image: item.product.image,
               name_order: item.product.name,
+              image_url: `https://tarot-76pd.onrender.com${item.product.image}`,
               units: item.quantity,
               price: formatCurrency(item.product.price),
             })),
@@ -170,14 +180,6 @@ const Shop: React.FC = () => {
         ).then(() => {
           // Sau khi gửi email thành công, thực hiện các thao tác như xóa giỏ hàng và cập nhật sản phẩm
           setCart([]);
-          setShowSuccessPopup(true);
-
-          if (popupTimeout) clearTimeout(popupTimeout);
-          const timeout = setTimeout(() => {
-            setShowSuccessPopup(false);
-          }, 10000);
-          setPopupTimeout(timeout);
-
           closeModal();
 
           // Cập nhật số lượng sản phẩm trong cơ sở dữ liệu
@@ -241,7 +243,7 @@ const Shop: React.FC = () => {
                   className={styles.imageRecommendCard} 
                 />
                 <div>{product.name}</div>
-                CHỈ VỚI {formatCurrency(product.price)}
+                <span className={styles.priceRecommendCard}>CHỈ VỚI {formatCurrency(product.price)}</span>
                 <button className={styles.buyButton} onClick={scrollToShopCard}>MUA NGAY</button>
               </div>
             ))}
@@ -351,7 +353,7 @@ const Shop: React.FC = () => {
         <div className={styles.successPopup}>
             <div className={styles.popupContent}>
             <span className={styles.closePopup} onClick={() => setShowSuccessPopup(false)}>X</span>
-            <h3>Mua hàng thành công!</h3>
+            <div className={styles.titleSuccessPopup}>Đặt hàng thành công!</div>
             <p>Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi. Đơn hàng của bạn đã được xác nhận.</p>
             </div>
         </div>
