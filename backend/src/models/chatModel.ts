@@ -7,7 +7,7 @@ if (!apiKey) {
   throw new Error("API key is missing");
 }
 
-const geminiAPIUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';  // Đặt đúng URL endpoint của Gemini API
+const geminiAPIUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';  // Đặt đúng URL endpoint của Gemini API
 
 export const getGeminiResponse = async (prompt: string): Promise<string> => {
   try {
